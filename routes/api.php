@@ -10,6 +10,8 @@ Route::post('Register', [AuthController::class, 'Register'])->name('Register');
 
 
 Route::controller(ServiceProviderController::class)->group(function () {
-    Route::post('addDeal', 'addDeal')->name('AddDeal');
+    Route::post('BasicInfo', 'BasicInfo')->name('BasicInfo');
+    Route::post('PriceAndPackage', 'PriceAndPackage')->name('PriceAndPackage');
+    Route::post('MediaUpload', 'MediaUpload')->name('MediaUpload');
 });
 
