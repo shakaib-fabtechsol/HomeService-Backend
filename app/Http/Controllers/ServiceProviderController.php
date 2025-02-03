@@ -18,15 +18,17 @@ class ServiceProviderController extends Controller
     }
 
     public function MediaUpload(Request $request){
-        // if ($request->hasFile('image')) {
-        //     $photo1 = $request->file('img');
+        if ($request->hasFile('image')) {
+            $photo1 = $request->file('image');
 
-        //     $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
-        //     $photo_destination = public_path('uploads');
-        //     $photo1->move($photo_destination, $photo_name1);
-        //     $data['img'] = $photo_name1;
-        // }
-        // Deal::create($request->all());
-        return response()->json(['message' => 'Added new package deal successfully'], 200);
+            $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+            $photo_destination = public_path('uploads');
+            $photo1->move($photo_destination, $photo_name1);
+            $data['image'] = $photo_name1;
+            Deal::create($data);
+            return response()->json(['message' => 'Added new deal with Image successfully'], 200);
+        } else{
+            return response()->json(['message' => 'image field required'], 422);
+        }
     }
 }
