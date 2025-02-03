@@ -12,12 +12,11 @@ Route::post('Userlogin','Userlogin')->name('Userlogin');
 
 });
 Route::middleware('auth:sanctum')->group( function () {
+    Route::controller(ServiceProviderController::class)->group(function () {
+        Route::post('BasicInfo', 'BasicInfo')->name('BasicInfo');
+        Route::post('PriceAndPackage', 'PriceAndPackage')->name('PriceAndPackage');
+        Route::post('MediaUpload', 'MediaUpload')->name('MediaUpload');
+    });
+});
 
-});
-Route::controller(ServiceProviderController::class)->group(function () {
-    Route::post('addDeal', 'addDeal')->name('AddDeal');
-    Route::post('BasicInfo', 'BasicInfo')->name('BasicInfo');
-    Route::post('PriceAndPackage', 'PriceAndPackage')->name('PriceAndPackage');
-    Route::post('MediaUpload', 'MediaUpload')->name('MediaUpload');
-});
 
