@@ -185,6 +185,10 @@ class ServiceProviderController extends Controller
     public function DeleteDeal(Request $request){
         $deal = Deal::find($request->id);
         if($deal){
+            $imagePath = public_path('uploads/' . $deal->image);
+            if (!empty($deal->image) && file_exists($imagePath)) {
+                unlink($imagePath);
+            }
             $deal->delete();
             return response()->json(['message' => 'Deal deleted successfully', 'deal' => $deal], 200);
         } else{
