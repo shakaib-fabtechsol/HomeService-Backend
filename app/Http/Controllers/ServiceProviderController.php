@@ -16,6 +16,15 @@ class ServiceProviderController extends Controller
         }
     }
 
+    public function Deal(Request $request){
+        $deal = Deal::where('id',$request->id)->get();
+        if($deal){
+            return response()->json(['deal' => $deal], 200);
+        } else{
+            return response()->json(['message' => 'No deal found'], 200);
+        }
+    }
+
     public function DealPublish(Request $request){
         $deal = Deal::find($request->id);
         if($deal){
