@@ -24,6 +24,8 @@ Route::middleware('auth:sanctum')->group( function () {
 
         Route::get('Deals', 'Deals')->name('Deals');
         Route::post('DeleteDeal', 'DeleteDeal')->name('DeleteDeal');
+
+        Route::post('DealPublish', 'DealPublish')->name('DealPublish');
     });
 });
 

@@ -42,5 +42,6 @@ class Deal extends Model
         'final_list_price3',
         'estimated_service_timing3',
         'image',
+        'publish',
     ];
 }

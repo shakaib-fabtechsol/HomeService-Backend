@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ServiceProviderController extends Controller
 {
     public function Deals(Request $request){
-        $deals = Deal::all();
+        $deals = Deal::where('publish',1)->get();
         if($deals){
             return response()->json(['deals' => $deals], 200);
         } else{
@@ -16,13 +16,29 @@ class ServiceProviderController extends Controller
         }
     }
 
+    public function DealPublish(Request $request){
+        $deal = Deal::find($request->id);
+        if($deal){
+            $data = $request->all();
+            $data['publish'] = 1;
+            $deal->update($data);
+            return response()->json(['message' => 'Deal Publish successfully', 'deal' => $deal], 200);
+        } else{
+            return response()->json(['message' => 'No deals found'], 200);
+        }
+    }
+
     public function BasicInfo(Request $request){
-        $deal = Deal::create($request->all());
+        $data = $request->all();
+        $data['publish'] = 0;
+        $deal = Deal::create($data);
         return response()->json(['message' => 'Added new deal successfully', 'deal' => $deal], 200);
     }
 
     public function PriceAndPackage(Request $request){
-        $deal = Deal::create($request->all());
+        $data = $request->all();
+        $data['publish'] = 0;
+        $deal = Deal::create($data);
         return response()->json(['message' => 'Added new package deal successfully', 'deal' => $deal], 200);
     }
 
@@ -34,6 +50,7 @@ class ServiceProviderController extends Controller
             $photo_destination = public_path('uploads');
             $photo1->move($photo_destination, $photo_name1);
             $data['image'] = $photo_name1;
+            $data['publish'] = 0;
             $deal = Deal::create($data);
             return response()->json(['message' => 'Added new deal with Image successfully', 'deal' => $deal], 200);
         } else{
