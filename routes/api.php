@@ -23,11 +23,11 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('UpdateMediaUpload', 'UpdateMediaUpload')->name('UpdateMediaUpload');
 
         Route::get('Deals', 'Deals')->name('Deals');
+        Route::post('Deal', 'Deal')->name('Deal');
         Route::post('DeleteDeal', 'DeleteDeal')->name('DeleteDeal');
 
         Route::post('DealPublish', 'DealPublish')->name('DealPublish');
     });
 });
-
 
 
