@@ -17,13 +17,13 @@ class ServiceProviderController extends Controller
     }
 
     public function BasicInfo(Request $request){
-        Deal::create($request->all());
-        return response()->json(['message' => 'Added new deal successfully'], 200);
+        $deal = Deal::create($request->all());
+        return response()->json(['message' => 'Added new deal successfully', 'deal' => $deal], 200);
     }
 
     public function PriceAndPackage(Request $request){
-        Deal::create($request->all());
-        return response()->json(['message' => 'Added new package deal successfully'], 200);
+        $deal = Deal::create($request->all());
+        return response()->json(['message' => 'Added new package deal successfully', 'deal' => $deal], 200);
     }
 
     public function MediaUpload(Request $request){
@@ -34,8 +34,8 @@ class ServiceProviderController extends Controller
             $photo_destination = public_path('uploads');
             $photo1->move($photo_destination, $photo_name1);
             $data['image'] = $photo_name1;
-            Deal::create($data);
-            return response()->json(['message' => 'Added new deal with Image successfully'], 200);
+            $deal = Deal::create($data);
+            return response()->json(['message' => 'Added new deal with Image successfully', 'deal' => $deal], 200);
         } else{
             return response()->json(['message' => 'image field required'], 422);
         }
@@ -54,7 +54,7 @@ class ServiceProviderController extends Controller
                 $data['residential'] = null;
             }
             $deal->update($data);
-            return response()->json(['deals' => 'Deal updated successfully'], 200);
+            return response()->json(['message' => 'Deal updated successfully', 'deal' => $deal], 200);
         } else{
             return response()->json(['message' => 'No deals found'], 200);
         }
@@ -127,7 +127,7 @@ class ServiceProviderController extends Controller
 
             }
             $deal->update($data);
-            return response()->json(['deals' => 'Deal updated successfully'], 200);
+            return response()->json(['message' => 'Deal updated successfully', 'deal' => $deal], 200);
         } else{
             return response()->json(['message' => 'No deals found'], 200);
         }
@@ -150,7 +150,7 @@ class ServiceProviderController extends Controller
                 $data['id'] = $request->id;
                 $deal->update($data);
             }
-            return response()->json(['message' => 'Image updated successfully'], 200);
+            return response()->json(['message' => 'Image updated successfully', 'deal' => $deal], 200);
         } else{
             return response()->json(['message' => 'No deals found'], 200);
         }
@@ -160,7 +160,7 @@ class ServiceProviderController extends Controller
         $deal = Deal::find($request->id);
         if($deal){
             $deal->delete();
-            return response()->json(['message' => 'Deal deleted successfully'], 200);
+            return response()->json(['message' => 'Deal deleted successfully', 'deal' => $deal], 200);
         } else{
             return response()->json(['message' => 'No deal found'], 200);
         }
