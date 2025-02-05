@@ -245,7 +245,7 @@ class ServiceProviderController extends Controller
         } else{
             return response()->json(['message' => 'No user found'], 200);
         }
-      
+    } 
     public function AddPaymentDetails(Request $request){
 
         $data=$request->all();
