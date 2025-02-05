@@ -39,8 +39,10 @@ Route::middleware('auth:sanctum')->group( function () {
     
         Route::post('AddPaymentDetails', 'AddPaymentDetails')->name('AddPaymentDetails');
         Route::post('UpdatePaymentDetails', 'UpdatePaymentDetails')->name('UpdatePaymentDetails');
-        Route::post('DeletePaymentDetails', 'DeletePaymentDetails')->name('DeletePaymentDetails');
-    
+
+        Route::get('DeletePaymentDetails/{id}', 'DeletePaymentDetails')->name('DeletePaymentDetails');
+
+
     });
 });
 
