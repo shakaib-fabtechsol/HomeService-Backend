@@ -18,7 +18,17 @@ class AuthController extends Controller
         'user' => $user,
     ], 201);
     }
+ 
+    public function UpdateUser(Request $request){
 
+        $user=User::find($request->id);
+
+        $user->update(['terms' => 1]);
+        return response()->json([
+            'message' => 'User successfully updated!',
+            'user' => $user,
+        ], 201);
+    }
 
     public function Userlogin(Request $request)
     {
