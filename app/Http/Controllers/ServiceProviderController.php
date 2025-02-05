@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BusinessProfile;
 use App\Models\Deal;
 use App\Models\User;
 use App\Models\PaymentDetail;
@@ -20,8 +21,8 @@ class ServiceProviderController extends Controller
         }
     }
 
-    public function Deal(Request $request){
-        $deal = Deal::where('id',$request->id)->get();
+    public function Deal($id){
+        $deal = Deal::where('id',$id)->get();
         if($deal){
             return response()->json(['deal' => $deal], 200);
         } else{
@@ -187,8 +188,8 @@ class ServiceProviderController extends Controller
         }
     }
 
-    public function DeleteDeal(Request $request){
-        $deal = Deal::find($request->id);
+    public function DeleteDeal($id){
+        $deal = Deal::find($id);
         if($deal){
             $imagePath = public_path('uploads/' . $deal->image);
             if (!empty($deal->image) && file_exists($imagePath)) {
@@ -238,8 +239,13 @@ class ServiceProviderController extends Controller
     }
 
     public function BusinessProfile(Request $request){
-        $user = User::find($request->id);
+        $user = User::find($request->user_id);
         if($user){
+            $businessProfile = BusinessProfile::where('user_id', $user->id)->first();
+            if($businessProfile){
+
+            }
+
            
             return response()->json(['message' => 'User Business Profile successfully', 'user' => $user], 200);
         } else{
