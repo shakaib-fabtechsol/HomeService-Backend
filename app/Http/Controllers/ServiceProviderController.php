@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ServiceProviderController extends Controller
@@ -194,6 +195,28 @@ class ServiceProviderController extends Controller
             return response()->json(['message' => 'Deal deleted successfully', 'deal' => $deal], 200);
         } else{
             return response()->json(['message' => 'No deal found'], 200);
+        }
+    }
+
+    public function MyDetails(Request $request){
+        $user = User::find($request->id);
+        if($user){
+            $data = $request->all();
+            if ($request->hasFile('personal_image')) {
+                $imagePath = public_path('uploads/' . $user->personal_image);
+                if (!empty($user->personal_image) && file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+                $photo1 = $request->file('personal_image');
+                $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                $photo_destination = public_path('uploads');
+                $photo1->move($photo_destination, $photo_name1);
+                $data['personal_image'] = $photo_name1;
+                $user->update($data);
+            }
+            return response()->json(['message' => 'User Personal details updated successfully', 'user' => $user], 200);
+        } else{
+            return response()->json(['message' => 'No user found'], 200);
         }
     }
 
