@@ -39,7 +39,7 @@ class ServiceProviderController extends Controller
 
     public function BasicInfo(Request $request){
         $data = $request->all();
-        $data['search_tags'] = !empty($request->search_tags) ? implode(',', $request->search_tags) : '';
+        // $data['search_tags'] = !empty($request->search_tags) ? implode(',', $request->search_tags) : '';
         $data['publish'] = 0;
         $deal = Deal::create($data);
         return response()->json(['message' => 'Added new deal successfully', 'deal' => $deal], 200);
