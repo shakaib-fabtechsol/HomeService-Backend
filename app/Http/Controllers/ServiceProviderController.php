@@ -235,4 +235,14 @@ class ServiceProviderController extends Controller
         }
     }
 
+    public function BusinessProfile(Request $request){
+        $user = User::find($request->id);
+        if($user){
+           
+            return response()->json(['message' => 'User Business Profile successfully', 'user' => $user], 200);
+        } else{
+            return response()->json(['message' => 'No user found'], 200);
+        }
+    }
+
 }
