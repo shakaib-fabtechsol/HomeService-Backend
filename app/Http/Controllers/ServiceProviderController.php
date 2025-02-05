@@ -274,7 +274,7 @@ class ServiceProviderController extends Controller
                 $data['hourly_estimated_service_time'] = null;
             }
             $deal->update($data);
-            return response()->json(['message' => 'Deal updated successfully', 'deal' => $deal], 200);
+            return response()->json(['deal' => $deal], 200);
         } else {
             return response()->json(['message' => 'No deals found'], 200);
         }
