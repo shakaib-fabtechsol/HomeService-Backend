@@ -29,6 +29,8 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('DealPublish', 'DealPublish')->name('DealPublish');
     
         Route::post('MyDetails', 'MyDetails')->name('MyDetails');
+    
+        Route::post('UpdatePassword', 'UpdatePassword')->name('UpdatePassword');
     });
 });
 
