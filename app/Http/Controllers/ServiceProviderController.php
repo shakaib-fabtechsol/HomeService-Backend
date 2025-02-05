@@ -339,15 +339,37 @@ class ServiceProviderController extends Controller
     public function BusinessProfile(Request $request){
         $user = User::find($request->user_id);
         if($user){
+            $data = $request->all();
             $businessProfile = BusinessProfile::where('user_id', $user->id)->first();
             if($businessProfile){
-
+                if ($request->hasFile('business_logo')) {
+                    $imagePath = public_path('uploads/' . $businessProfile->business_logo);
+                    if (!empty($businessProfile->business_logo) && file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                    $photo1 = $request->file('business_logo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['business_logo'] = $photo_name1;
+                    $user->update($data);
+                }
+                $businessProfile->update($data);
+                return response()->json(['message' => 'User Business Profile already exist successfully', 'user' => $user], 200);
+            } else{
+                if ($request->hasFile('business_logo')) {
+                    $photo1 = $request->file('business_logo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['business_logo'] = $photo_name1;
+                }
+                $businessProfile = BusinessProfile::create($data);
             }
 
-           
+            return response()->json(['message' => 'User Business Profile successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
+        } else{
 
-            return response()->json(['message' => 'User Business Profile successfully', 'user' => $user], 200);
-        } else {
             return response()->json(['message' => 'No user found'], 200);
         }
     }
