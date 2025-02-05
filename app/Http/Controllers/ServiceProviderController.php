@@ -154,6 +154,28 @@ class ServiceProviderController extends Controller
 
     public function MediaUpload(Request $request)
     {
+        if(!empty($request->id)){
+            $deal = Deal::find($request->id);
+            if ($deal) {
+                $data = [];
+                if ($request->hasFile('image')) {
+                    $imagePath = public_path('uploads/' . $deal->image);
+                    if (!empty($deal->image) && file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                    $photo1 = $request->file('image');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['image'] = $photo_name1;
+                    $data['id'] = $request->id;
+                    $deal->update($data);
+                }
+                return response()->json(['message' => 'Image updated successfully', 'deal' => $deal], 200);
+            } else {
+                return response()->json(['message' => 'No deals found'], 200);
+            }
+        }else{
         if ($request->hasFile('image')) {
             $photo1 = $request->file('image');
 
@@ -167,6 +189,7 @@ class ServiceProviderController extends Controller
         } else {
             return response()->json(['message' => 'image field required'], 422);
         }
+    }
     }
 
     public function UpdateBasicInfo(Request $request)
