@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
+use App\Models\User;
 use App\Models\PaymentDetail;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ServiceProviderController extends Controller
 {
@@ -198,6 +201,51 @@ class ServiceProviderController extends Controller
         }
     }
 
+    public function MyDetails(Request $request){
+        $user = User::find($request->id);
+        if($user){
+            $data = $request->all();
+            if ($request->hasFile('personal_image')) {
+                $imagePath = public_path('uploads/' . $user->personal_image);
+                if (!empty($user->personal_image) && file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+                $photo1 = $request->file('personal_image');
+                $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                $photo_destination = public_path('uploads');
+                $photo1->move($photo_destination, $photo_name1);
+                $data['personal_image'] = $photo_name1;
+                $user->update($data);
+            }
+            return response()->json(['message' => 'User Personal details updated successfully', 'user' => $user], 200);
+        } else{
+            return response()->json(['message' => 'No user found'], 200);
+        }
+    }
+
+    public function UpdatePassword(Request $request){
+        $user = User::find($request->id);
+        if($user){
+            if (!Hash::check($request->current_password, $user->password)) {
+                return response()->json(['message' => 'Current password is incorrect'], 200);
+            }
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return response()->json(['message' => 'User Password Updated successfully', 'user' => $user], 200);
+        } else{
+            return response()->json(['message' => 'No user found'], 200);
+        }
+    }
+
+    public function BusinessProfile(Request $request){
+        $user = User::find($request->id);
+        if($user){
+           
+            return response()->json(['message' => 'User Business Profile successfully', 'user' => $user], 200);
+        } else{
+            return response()->json(['message' => 'No user found'], 200);
+        }
+      
     public function AddPaymentDetails(Request $request){
 
         $data=$request->all();
@@ -230,6 +278,7 @@ class ServiceProviderController extends Controller
        $payment = PaymentDetail::find($request->id);
         $payment->delete();
      return response()->json(['message' => 'Deleted Payment details successfully', 'payment' => $payment], 200);
+
     }
 
 }

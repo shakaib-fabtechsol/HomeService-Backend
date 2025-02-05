@@ -24,8 +24,9 @@ class User extends Authenticatable
         'phone',
         'role',
         'terms',
-
-
+        'personal_image',
+        'sales_referred',
+        'sales_representative',
 
     ];
 

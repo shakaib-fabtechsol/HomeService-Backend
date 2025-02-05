@@ -20,6 +20,11 @@ return new class extends Migration
             $table->integer('role');
             $table->string('password');
             $table->integer('terms')->nullable();
+          
+            $table->string('personal_image')->nullable();
+            $table->string('sales_referred')->nullable();
+            $table->integer('sales_representative')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });
