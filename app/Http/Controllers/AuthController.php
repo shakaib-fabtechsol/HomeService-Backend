@@ -13,12 +13,12 @@ class AuthController extends Controller
 
      $user=User::create($data);
 
-     User::where('id',$user->id)->update(['terms' => 1]);
      return response()->json([
         'message' => 'User successfully registered!',
         'user' => $user,
     ], 201);
     }
+
 
     public function Userlogin(Request $request)
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
+use App\Models\PaymentDetail;
 use Illuminate\Http\Request;
 
 class ServiceProviderController extends Controller
@@ -195,6 +196,41 @@ class ServiceProviderController extends Controller
         } else{
             return response()->json(['message' => 'No deal found'], 200);
         }
+    }
+
+    public function AddPaymentDetails(Request $request){
+
+        $data=$request->all();
+
+        if(isset($request->user_id)){
+
+            $request['user_id']=$request->user_id;
+            $payment=PaymentDetail::create($data);
+            return response()->json(['message' => 'Added Payment details successfully', 'payment' => $payment], 200);
+        }
+
+        return response()->json(['message' => 'User not found'], 200);
+
+
+    }
+
+    public function UpdatePaymentDetails(Request $request){
+
+       $payment=PaymentDetail::find($request->id); 
+
+       $data=$request->all();
+
+       $payment->update($data);
+
+       return response()->json(['message' => 'Updated Payment details successfully', 'payment' => $payment], 200);
+    }
+
+    public function DeletePaymentDetails(Request $request){
+
+       
+        $payment = PaymentDetail::find($$request->id);
+        $payment->delete();
+     return response()->json(['message' => 'Deleted Payment details successfully'], 200);
     }
 
 }
