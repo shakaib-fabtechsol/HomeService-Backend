@@ -12,52 +12,148 @@ use Illuminate\Support\Facades\Hash;
 
 class ServiceProviderController extends Controller
 {
-    public function Deals(Request $request){
+    public function Deals(Request $request)
+    {
         $deals = Deal::orderBy('id', 'desc')->get();
-        if($deals){
+        if ($deals) {
             return response()->json(['deals' => $deals], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'No deals found'], 200);
         }
     }
+
 
     public function Deal($id){
         $deal = Deal::where('id',$id)->get();
         if($deal){
+
             return response()->json(['deal' => $deal], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'No deal found'], 200);
         }
     }
 
-    public function DealPublish(Request $request){
+    public function DealPublish(Request $request)
+    {
         $deal = Deal::find($request->id);
-        if($deal){
+        if ($deal) {
             $data = $request->all();
             $data['publish'] = 1;
             $deal->update($data);
             return response()->json(['message' => 'Deal Publish successfully', 'deal' => $deal], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'No deals found'], 200);
         }
     }
 
-    public function BasicInfo(Request $request){
+    public function BasicInfo(Request $request)
+    {
         $data = $request->all();
         // $data['search_tags'] = !empty($request->search_tags) ? implode(',', $request->search_tags) : '';
-        $data['publish'] = 0;
-        $deal = Deal::create($data);
-        return response()->json(['message' => 'Added new deal successfully', 'deal' => $deal], 200);
+        if (!empty($request->id)) {
+            $deal = Deal::find($request->id);
+            if ($deal) {
+                $data = $request->all();
+                if ($request->has('commercial')) {
+                } else {
+                    $data['commercial'] = null;
+                }
+                if ($request->has('residential')) {
+                } else {
+                    $data['residential'] = null;
+                }
+                $deal->update($data);
+                return response()->json(['message' => 'Deal updated successfully', 'deal' => $deal], 200);
+            } else {
+                return response()->json(['message' => 'No deals found'], 200);
+            }
+        } else {
+            $data['publish'] = 0;
+            $deal = Deal::create($data);
+            return response()->json(['message' => 'Added new deal successfully', 'deal' => $deal], 200);
+        }
     }
 
-    public function PriceAndPackage(Request $request){
+    public function PriceAndPackage(Request $request)
+    {
         $data = $request->all();
+
+        if(!empty($request->id)){
+            $deal = Deal::find($request->id);
+          
+            if ($deal) {
+                $data = $request->all();
+                if ($data['pricing_model'] == 'Flat') {
+                    $data['hourly_rate'] = null;
+                    $data['discount'] = null;
+                    $data['hourly_final_list_price'] = null;
+                    $data['hourly_estimated_service_time'] = null;
+                    $data['title1'] = null;
+                    $data['deliverable1'] = null;
+                    $data['price1'] = null;
+                    $data['by_now_discount1'] = null;
+                    $data['final_list_price1'] = null;
+                    $data['estimated_service_timing1'] = null;
+                    $data['title2'] = null;
+                    $data['deliverable2'] = null;
+                    $data['price2'] = null;
+                    $data['by_now_discount2'] = null;
+                    $data['final_list_price2'] = null;
+                    $data['estimated_service_timing2'] = null;
+                    $data['title3'] = null;
+                    $data['deliverable3'] = null;
+                    $data['price3'] = null;
+                    $data['by_now_discount3'] = null;
+                    $data['final_list_price3'] = null;
+                    $data['estimated_service_timing3'] = null;
+                } elseif ($data['pricing_model'] == 'Hourly') {
+                    $data['flat_rate_price'] = null;
+                    $data['flat_by_now_discount'] = null;
+                    $data['flat_final_list_price'] = null;
+                    $data['flat_estimated_service_time'] = null;
+                    $data['title1'] = null;
+                    $data['deliverable1'] = null;
+                    $data['price1'] = null;
+                    $data['by_now_discount1'] = null;
+                    $data['final_list_price1'] = null;
+                    $data['estimated_service_timing1'] = null;
+                    $data['title2'] = null;
+                    $data['deliverable2'] = null;
+                    $data['price2'] = null;
+                    $data['by_now_discount2'] = null;
+                    $data['final_list_price2'] = null;
+                    $data['estimated_service_timing2'] = null;
+                    $data['title3'] = null;
+                    $data['deliverable3'] = null;
+                    $data['price3'] = null;
+                    $data['by_now_discount3'] = null;
+                    $data['final_list_price3'] = null;
+                    $data['estimated_service_timing3'] = null;
+                } else {
+                    $data['flat_rate_price'] = null;
+                    $data['flat_by_now_discount'] = null;
+                    $data['flat_final_list_price'] = null;
+                    $data['flat_estimated_service_time'] = null;
+                    $data['hourly_rate'] = null;
+                    $data['discount'] = null;
+                    $data['hourly_final_list_price'] = null;
+                    $data['hourly_estimated_service_time'] = null;
+                }
+                $deal->update($data);
+                return response()->json(['message' => 'Deal updated successfully', 'deal' => $deal], 200);
+            } else {
+                return response()->json(['message' => 'No deals found'], 200);
+            }
+
+        }else{
         $data['publish'] = 0;
         $deal = Deal::create($data);
         return response()->json(['message' => 'Added new package deal successfully', 'deal' => $deal], 200);
+        }
     }
 
-    public function MediaUpload(Request $request){
+    public function MediaUpload(Request $request)
+    {
         if ($request->hasFile('image')) {
             $photo1 = $request->file('image');
 
@@ -68,36 +164,37 @@ class ServiceProviderController extends Controller
             $data['publish'] = 0;
             $deal = Deal::create($data);
             return response()->json(['message' => 'Added new deal with Image successfully', 'deal' => $deal], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'image field required'], 422);
         }
     }
 
-    public function UpdateBasicInfo(Request $request){
+    public function UpdateBasicInfo(Request $request)
+    {
         $deal = Deal::find($request->id);
-        if($deal){
+        if ($deal) {
             $data = $request->all();
-            if ($request->has('commercial')){
-            } else{
+            if ($request->has('commercial')) {
+            } else {
                 $data['commercial'] = null;
             }
-            if ($request->has('residential')){
-            } else{
+            if ($request->has('residential')) {
+            } else {
                 $data['residential'] = null;
             }
             $deal->update($data);
             return response()->json(['message' => 'Deal updated successfully', 'deal' => $deal], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'No deals found'], 200);
         }
     }
 
-    public function UpdatePriceAndPackage(Request $request){
+    public function UpdatePriceAndPackage(Request $request)
+    {
         $deal = Deal::find($request->id);
-        if($deal){
+        if ($deal) {
             $data = $request->all();
-            if ($data['pricing_model'] == 'Flat'){
-
+            if ($data['pricing_model'] == 'Flat') {
                 $data['hourly_rate'] = null;
                 $data['discount'] = null;
                 $data['hourly_final_list_price'] = null;
@@ -120,9 +217,7 @@ class ServiceProviderController extends Controller
                 $data['by_now_discount3'] = null;
                 $data['final_list_price3'] = null;
                 $data['estimated_service_timing3'] = null;
-
-            } else if($data['pricing_model'] == 'Hourly'){
-                
+            } elseif ($data['pricing_model'] == 'Hourly') {
                 $data['flat_rate_price'] = null;
                 $data['flat_by_now_discount'] = null;
                 $data['flat_final_list_price'] = null;
@@ -145,9 +240,7 @@ class ServiceProviderController extends Controller
                 $data['by_now_discount3'] = null;
                 $data['final_list_price3'] = null;
                 $data['estimated_service_timing3'] = null;
-
-            } else{
-
+            } else {
                 $data['flat_rate_price'] = null;
                 $data['flat_by_now_discount'] = null;
                 $data['flat_final_list_price'] = null;
@@ -156,18 +249,18 @@ class ServiceProviderController extends Controller
                 $data['discount'] = null;
                 $data['hourly_final_list_price'] = null;
                 $data['hourly_estimated_service_time'] = null;
-
             }
             $deal->update($data);
             return response()->json(['message' => 'Deal updated successfully', 'deal' => $deal], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'No deals found'], 200);
         }
     }
 
-    public function UpdateMediaUpload(Request $request){
+    public function UpdateMediaUpload(Request $request)
+    {
         $deal = Deal::find($request->id);
-        if($deal){
+        if ($deal) {
             $data = [];
             if ($request->hasFile('image')) {
                 $imagePath = public_path('uploads/' . $deal->image);
@@ -183,28 +276,31 @@ class ServiceProviderController extends Controller
                 $deal->update($data);
             }
             return response()->json(['message' => 'Image updated successfully', 'deal' => $deal], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'No deals found'], 200);
         }
     }
 
+
     public function DeleteDeal($id){
         $deal = Deal::find($id);
         if($deal){
+
             $imagePath = public_path('uploads/' . $deal->image);
             if (!empty($deal->image) && file_exists($imagePath)) {
                 unlink($imagePath);
             }
             $deal->delete();
             return response()->json(['message' => 'Deal deleted successfully', 'deal' => $deal], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'No deal found'], 200);
         }
     }
 
-    public function MyDetails(Request $request){
+    public function MyDetails(Request $request)
+    {
         $user = User::find($request->id);
-        if($user){
+        if ($user) {
             $data = $request->all();
             if ($request->hasFile('personal_image')) {
                 $imagePath = public_path('uploads/' . $user->personal_image);
@@ -219,24 +315,26 @@ class ServiceProviderController extends Controller
                 $user->update($data);
             }
             return response()->json(['message' => 'User Personal details updated successfully', 'user' => $user], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'No user found'], 200);
         }
     }
 
-    public function UpdatePassword(Request $request){
+    public function UpdatePassword(Request $request)
+    {
         $user = User::find($request->id);
-        if($user){
+        if ($user) {
             if (!Hash::check($request->current_password, $user->password)) {
                 return response()->json(['message' => 'Current password is incorrect'], 200);
             }
             $user->password = Hash::make($request->password);
             $user->save();
             return response()->json(['message' => 'User Password Updated successfully', 'user' => $user], 200);
-        } else{
+        } else {
             return response()->json(['message' => 'No user found'], 200);
         }
     }
+
 
     public function BusinessProfile(Request $request){
         $user = User::find($request->user_id);
@@ -271,42 +369,38 @@ class ServiceProviderController extends Controller
 
             return response()->json(['message' => 'User Business Profile successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
         } else{
+
             return response()->json(['message' => 'No user found'], 200);
         }
-    } 
-    public function AddPaymentDetails(Request $request){
+    }
+    public function AddPaymentDetails(Request $request)
+    {
+        $data = $request->all();
 
-        $data=$request->all();
-
-        if(isset($request->user_id)){
-
-            $request['user_id']=$request->user_id;
-            $payment=PaymentDetail::create($data);
+        if (isset($request->user_id)) {
+            $request['user_id'] = $request->user_id;
+            $payment = PaymentDetail::create($data);
             return response()->json(['message' => 'Added Payment details successfully', 'payment' => $payment], 200);
         }
 
         return response()->json(['message' => 'User not found'], 200);
-
-
     }
 
-    public function UpdatePaymentDetails(Request $request){
+    public function UpdatePaymentDetails(Request $request)
+    {
+        $payment = PaymentDetail::find($request->id);
 
-       $payment=PaymentDetail::find($request->id); 
+        $data = $request->all();
 
-       $data=$request->all();
+        $payment->update($data);
 
-       $payment->update($data);
-
-       return response()->json(['message' => 'Updated Payment details successfully', 'payment' => $payment], 200);
+        return response()->json(['message' => 'Updated Payment details successfully', 'payment' => $payment], 200);
     }
 
-    public function DeletePaymentDetails(Request $request){
-
-       $payment = PaymentDetail::find($request->id);
+    public function DeletePaymentDetails($id)
+    {
+        $payment = PaymentDetail::find($id);
         $payment->delete();
-     return response()->json(['message' => 'Deleted Payment details successfully', 'payment' => $payment], 200);
-
+        return response()->json(['message' => 'Deleted Payment details successfully', 'payment' => $payment], 200);
     }
-
 }
