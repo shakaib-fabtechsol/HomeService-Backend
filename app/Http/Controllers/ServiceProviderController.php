@@ -390,7 +390,7 @@ class ServiceProviderController extends Controller
                 $businessProfile = BusinessProfile::create($data);
             }
 
-            return response()->json(['message' => 'User Business Profile successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
+            return response()->json(['message' => 'User Business Profile created successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
         } else{
 
             return response()->json(['message' => 'No user found'], 200);
@@ -425,5 +425,100 @@ class ServiceProviderController extends Controller
         $payment = PaymentDetail::find($id);
         $payment->delete();
         return response()->json(['message' => 'Deleted Payment details successfully', 'payment' => $payment], 200);
+    }
+
+    public function AdditionalPhotos(Request $request){
+        $user = User::find($request->user_id);
+        if($user){
+            $data = $request->all();
+            $businessProfile = BusinessProfile::where('user_id', $user->id)->first();
+            if($businessProfile){
+                if ($request->hasFile('technician_photo')) {
+                    $imagePath = public_path('uploads/' . $businessProfile->technician_photo);
+                    if (!empty($businessProfile->technician_photo) && file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                    $photo1 = $request->file('technician_photo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['technician_photo'] = $photo_name1;
+                    $user->update($data);
+                }
+                if ($request->hasFile('vehicle_photo')) {
+                    $imagePath = public_path('uploads/' . $businessProfile->vehicle_photo);
+                    if (!empty($businessProfile->vehicle_photo) && file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                    $photo1 = $request->file('vehicle_photo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['vehicle_photo'] = $photo_name1;
+                    $user->update($data);
+                }
+                if ($request->hasFile('facility_photo')) {
+                    $imagePath = public_path('uploads/' . $businessProfile->facility_photo);
+                    if (!empty($businessProfile->facility_photo) && file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                    $photo1 = $request->file('facility_photo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['facility_photo'] = $photo_name1;
+                    $user->update($data);
+                }
+                if ($request->hasFile('project_photo')) {
+                    $imagePath = public_path('uploads/' . $businessProfile->project_photo);
+                    if (!empty($businessProfile->project_photo) && file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                    $photo1 = $request->file('project_photo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['project_photo'] = $photo_name1;
+                    $user->update($data);
+                }
+                $businessProfile->update($data);
+                return response()->json(['message' => 'User Business Profile Updated successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
+            } else{
+                if ($request->hasFile('technician_photo')) {
+                    $photo1 = $request->file('technician_photo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['technician_photo'] = $photo_name1;
+                }
+                if ($request->hasFile('vehicle_photo')) {
+                    $photo1 = $request->file('vehicle_photo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['vehicle_photo'] = $photo_name1;
+                }
+                if ($request->hasFile('facility_photo')) {
+                    $photo1 = $request->file('facility_photo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['facility_photo'] = $photo_name1;
+                }
+                if ($request->hasFile('project_photo')) {
+                    $photo1 = $request->file('project_photo');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['project_photo'] = $photo_name1;
+                }
+                $businessProfile = BusinessProfile::create($data);
+            }
+
+            return response()->json(['message' => 'User Business Profile created successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
+        } else{
+
+            return response()->json(['message' => 'No user found'], 200);
+        }
     }
 }
