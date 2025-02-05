@@ -355,7 +355,7 @@ class ServiceProviderController extends Controller
                     $user->update($data);
                 }
                 $businessProfile->update($data);
-                return response()->json(['message' => 'User Business Profile already exist successfully', 'user' => $user], 200);
+                return response()->json(['message' => 'User Business Profile Updated successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
             } else{
                 if ($request->hasFile('business_logo')) {
                     $photo1 = $request->file('business_logo');
