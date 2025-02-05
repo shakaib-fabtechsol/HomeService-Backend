@@ -8,6 +8,7 @@ use App\Http\Controllers\ServiceProviderController;
 
 Route::controller(AuthController::class)->group(function () {
 Route::post('Register','Register')->name('Register');
+Route::post('UpdateUser','UpdateUser')->name('UpdateUser');
 Route::post('Userlogin','Userlogin')->name('Userlogin');
 
 });
