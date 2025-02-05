@@ -25,7 +25,6 @@ class AuthController extends Controller
 
         $user->update(['terms' => $request->terms]);
         return response()->json([
-            'success' => 'User successfully updated!',
             'user' => $user,
         ], 201);
     }
