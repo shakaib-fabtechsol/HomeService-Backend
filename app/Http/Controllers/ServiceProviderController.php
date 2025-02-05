@@ -227,10 +227,9 @@ class ServiceProviderController extends Controller
 
     public function DeletePaymentDetails(Request $request){
 
-       
-        $payment = PaymentDetail::find($$request->id);
+       $payment = PaymentDetail::find($request->id);
         $payment->delete();
-     return response()->json(['message' => 'Deleted Payment details successfully'], 200);
+     return response()->json(['message' => 'Deleted Payment details successfully', 'payment' => $payment], 200);
     }
 
 }
