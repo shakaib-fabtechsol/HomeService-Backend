@@ -298,7 +298,7 @@ class ServiceProviderController extends Controller
                 $data['id'] = $request->id;
                 $deal->update($data);
             }
-            return response()->json(['message' => 'Image updated successfully', 'deal' => $deal], 200);
+            return response()->json(['deal' => $deal], 200);
         } else {
             return response()->json(['message' => 'No deals found'], 200);
         }
