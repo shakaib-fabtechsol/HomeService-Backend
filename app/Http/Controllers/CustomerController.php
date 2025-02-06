@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PaymentMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -41,6 +42,18 @@ class CustomerController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
             return response()->json(['message' => 'User Password Updated successfully', 'user' => $user], 200);
+        } else {
+            return response()->json(['message' => 'No user found'], 200);
+        }
+    }
+
+    public function AddPaymentMethod(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if ($user) {
+            $data = $request->all();
+            $paymentMethod = PaymentMethod::create($data);
+            return response()->json(['message' => 'Added New Payment Method successfully', 'user' => $user, 'Payment Method' => $paymentMethod], 200);
         } else {
             return response()->json(['message' => 'No user found'], 200);
         }
