@@ -27,7 +27,7 @@ class User extends Authenticatable
         'personal_image',
         'sales_referred',
         'sales_representative',
-
+        'location',
     ];
 
     /**

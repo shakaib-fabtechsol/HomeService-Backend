@@ -4,6 +4,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServiceProviderController;
 
 Route::controller(AuthController::class)->group(function () {
@@ -44,7 +45,15 @@ Route::middleware('auth:sanctum')->group( function () {
     
         Route::post('AdditionalPhotos', 'AdditionalPhotos')->name('AdditionalPhotos');
     });
+
+    Route::prefix('Customer')->group(function () {
+        Route::controller(CustomerController::class)->group(function () {
+            Route::post('MyDetail', 'MyDetail')->name('MyDetail');
+            Route::post('NewPassword', 'NewPassword')->name('NewPassword');
+            Route::post('AddPaymentMethod', 'AddPaymentMethod')->name('AddPaymentMethod');
+            Route::get('DeletePaymentMethod/{id}', 'DeletePaymentMethod')->name('DeletePaymentMethod');
+            Route::post('UpdatePaymentMethod', 'UpdatePaymentMethod')->name('UpdatePaymentMethod');
+        });
+    });
     
 });
-
-
