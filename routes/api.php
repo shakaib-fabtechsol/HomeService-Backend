@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::prefix('Customer')->group(function () {
         Route::controller(CustomerController::class)->group(function () {
+            Route::get('ListDeals', 'ListDeals')->name('ListDeals');
             Route::post('MyDetail', 'MyDetail')->name('MyDetail');
             Route::post('NewPassword', 'NewPassword')->name('NewPassword');
             Route::post('AddPaymentMethod', 'AddPaymentMethod')->name('AddPaymentMethod');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deal;
 use App\Models\PaymentMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -77,6 +78,16 @@ class CustomerController extends Controller
             return response()->json(['message' => 'Payment Method Updated successfully', 'PaymentMethod' => $paymentMethod], 200);
         } else {
             return response()->json(['message' => 'No Payment Method found'], 200);
+        }
+    }
+
+    public function ListDeals(Request $request)
+    {
+        $deals = Deal::orderBy('id', 'desc')->get();
+        if ($deals) {
+            return response()->json(['deals' => $deals], 200);
+        } else {
+            return response()->json(['message' => 'No deals found'], 200);
         }
     }
 }
