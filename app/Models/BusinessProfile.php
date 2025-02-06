@@ -19,5 +19,8 @@ class BusinessProfile extends Model
         'vehicle_photo',
         'facility_photo',
         'project_photo',
+        'insurance_certificate',
+        'license_certificate',
+        'award_certificate',
     ];
 }

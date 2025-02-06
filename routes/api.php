@@ -44,6 +44,9 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::get('DeletePaymentDetails/{id}', 'DeletePaymentDetails')->name('DeletePaymentDetails');
     
         Route::post('AdditionalPhotos', 'AdditionalPhotos')->name('AdditionalPhotos');
+
+        Route::post('AddCertificateHours', 'AddCertificateHours')->name('AddCertificateHours');
+
     });
 
     Route::prefix('Customer')->group(function () {
