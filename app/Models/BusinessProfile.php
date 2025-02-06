@@ -22,5 +22,12 @@ class BusinessProfile extends Model
         'insurance_certificate',
         'license_certificate',
         'award_certificate',
+        'conversation_call_number',
+        'conversation_text_number',
+        'conversation_email',
+        'conversation_address',
+
+
+
     ];
 }
