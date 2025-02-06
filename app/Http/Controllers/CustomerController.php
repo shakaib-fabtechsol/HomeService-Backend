@@ -58,4 +58,25 @@ class CustomerController extends Controller
             return response()->json(['message' => 'No user found'], 200);
         }
     }
+
+    public function DeletePaymentMethod($id){
+        $paymentMethod = PaymentMethod::find($id);
+        if($paymentMethod){
+            $paymentMethod->delete();
+            return response()->json(['message' => 'Payment Method deleted successfully', 'PaymentMethod' => $paymentMethod], 200);
+        } else {
+            return response()->json(['message' => 'No Payment Method found'], 200);
+        }
+    }
+
+    public function UpdatePaymentMethod(Request $request){
+        $paymentMethod = PaymentMethod::find($request->id);
+        if($paymentMethod){
+            $data = $request->all();
+            $paymentMethod->update($data);
+            return response()->json(['message' => 'Payment Method Updated successfully', 'PaymentMethod' => $paymentMethod], 200);
+        } else {
+            return response()->json(['message' => 'No Payment Method found'], 200);
+        }
+    }
 }
