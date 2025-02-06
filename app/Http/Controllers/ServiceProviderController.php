@@ -6,7 +6,7 @@ use App\Models\BusinessProfile;
 use App\Models\Deal;
 use App\Models\User;
 use App\Models\PaymentDetail;
-
+use App\Models\Hour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,11 +22,10 @@ class ServiceProviderController extends Controller
         }
     }
 
-
-    public function Deal($id){
-        $deal = Deal::where('id',$id)->get();
-        if($deal){
-
+    public function Deal($id)
+    {
+        $deal = Deal::where('id', $id)->get();
+        if ($deal) {
             return response()->json(['deal' => $deal], 200);
         } else {
             return response()->json(['message' => 'No deal found'], 200);
@@ -78,9 +77,9 @@ class ServiceProviderController extends Controller
     {
         $data = $request->all();
 
-        if(!empty($request->id)){
+        if (!empty($request->id)) {
             $deal = Deal::find($request->id);
-          
+
             if ($deal) {
                 $data = $request->all();
                 if ($data['pricing_model'] == 'Flat') {
@@ -144,17 +143,16 @@ class ServiceProviderController extends Controller
             } else {
                 return response()->json(['message' => 'No deals found'], 200);
             }
-
-        }else{
-        $data['publish'] = 0;
-        $deal = Deal::create($data);
-        return response()->json(['message' => 'Added new package deal successfully', 'deal' => $deal], 200);
+        } else {
+            $data['publish'] = 0;
+            $deal = Deal::create($data);
+            return response()->json(['message' => 'Added new package deal successfully', 'deal' => $deal], 200);
         }
     }
 
     public function MediaUpload(Request $request)
     {
-        if(!empty($request->id)){
+        if (!empty($request->id)) {
             $deal = Deal::find($request->id);
             if ($deal) {
                 $data = [];
@@ -175,21 +173,21 @@ class ServiceProviderController extends Controller
             } else {
                 return response()->json(['message' => 'No deals found'], 200);
             }
-        }else{
-        if ($request->hasFile('image')) {
-            $photo1 = $request->file('image');
-
-            $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
-            $photo_destination = public_path('uploads');
-            $photo1->move($photo_destination, $photo_name1);
-            $data['image'] = $photo_name1;
-            $data['publish'] = 0;
-            $deal = Deal::create($data);
-            return response()->json(['message' => 'Added new deal with Image successfully', 'deal' => $deal], 200);
         } else {
-            return response()->json(['message' => 'image field required'], 422);
+            if ($request->hasFile('image')) {
+                $photo1 = $request->file('image');
+
+                $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                $photo_destination = public_path('uploads');
+                $photo1->move($photo_destination, $photo_name1);
+                $data['image'] = $photo_name1;
+                $data['publish'] = 0;
+                $deal = Deal::create($data);
+                return response()->json(['message' => 'Added new deal with Image successfully', 'deal' => $deal], 200);
+            } else {
+                return response()->json(['message' => 'image field required'], 422);
+            }
         }
-    }
     }
 
     public function UpdateBasicInfo(Request $request)
@@ -304,11 +302,10 @@ class ServiceProviderController extends Controller
         }
     }
 
-
-    public function DeleteDeal($id){
+    public function DeleteDeal($id)
+    {
         $deal = Deal::find($id);
-        if($deal){
-
+        if ($deal) {
             $imagePath = public_path('uploads/' . $deal->image);
             if (!empty($deal->image) && file_exists($imagePath)) {
                 unlink($imagePath);
@@ -358,13 +355,13 @@ class ServiceProviderController extends Controller
         }
     }
 
-
-    public function BusinessProfile(Request $request){
+    public function BusinessProfile(Request $request)
+    {
         $user = User::find($request->user_id);
-        if($user){
+        if ($user) {
             $data = $request->all();
             $businessProfile = BusinessProfile::where('user_id', $user->id)->first();
-            if($businessProfile){
+            if ($businessProfile) {
                 if ($request->hasFile('business_logo')) {
                     $imagePath = public_path('uploads/' . $businessProfile->business_logo);
                     if (!empty($businessProfile->business_logo) && file_exists($imagePath)) {
@@ -379,7 +376,7 @@ class ServiceProviderController extends Controller
                 }
                 $businessProfile->update($data);
                 return response()->json(['message' => 'User Business Profile Updated successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
-            } else{
+            } else {
                 if ($request->hasFile('business_logo')) {
                     $photo1 = $request->file('business_logo');
                     $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
@@ -391,8 +388,7 @@ class ServiceProviderController extends Controller
             }
 
             return response()->json(['message' => 'User Business Profile created successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
-        } else{
-
+        } else {
             return response()->json(['message' => 'No user found'], 200);
         }
     }
@@ -427,12 +423,13 @@ class ServiceProviderController extends Controller
         return response()->json(['message' => 'Deleted Payment details successfully', 'payment' => $payment], 200);
     }
 
-    public function AdditionalPhotos(Request $request){
+    public function AdditionalPhotos(Request $request)
+    {
         $user = User::find($request->user_id);
-        if($user){
+        if ($user) {
             $data = $request->all();
             $businessProfile = BusinessProfile::where('user_id', $user->id)->first();
-            if($businessProfile){
+            if ($businessProfile) {
                 if ($request->hasFile('technician_photo')) {
                     $imagePath = public_path('uploads/' . $businessProfile->technician_photo);
                     if (!empty($businessProfile->technician_photo) && file_exists($imagePath)) {
@@ -483,7 +480,7 @@ class ServiceProviderController extends Controller
                 }
                 $businessProfile->update($data);
                 return response()->json(['message' => 'User Business Profile Updated successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
-            } else{
+            } else {
                 if ($request->hasFile('technician_photo')) {
                     $photo1 = $request->file('technician_photo');
                     $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
@@ -516,9 +513,63 @@ class ServiceProviderController extends Controller
             }
 
             return response()->json(['message' => 'User Business Profile created successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
-        } else{
-
+        } else {
             return response()->json(['message' => 'No user found'], 200);
         }
+    }
+
+    public function AddCertificateHours(Request $request)
+    {
+        $data = $request->all();
+
+        if ($request->hasFile('insurance_certificate')) {
+            $photo1 = $request->file('insurance_certificate');
+            $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+            $photo_destination = public_path('uploads');
+            $photo1->move($photo_destination, $photo_name1);
+            $data['insurance_certificate'] = $photo_name1;
+        }
+        if ($request->hasFile('license_certificate')) {
+            $photo2 = $request->file('license_certificate');
+            $photo_name2 = time() . '-' . $photo2->getClientOriginalName();
+            $photo_destination = public_path('uploads');
+            $photo2->move($photo_destination, $photo_name2);
+            $data['license_certificate'] = $photo_name2;
+        }
+        if ($request->hasFile('award_certificate')) {
+            $photo3 = $request->file('award_certificate');
+            $photo_name3 = time() . '-' . $photo3->getClientOriginalName();
+            $photo_destination = public_path('uploads');
+            $photo3->move($photo_destination, $photo_name3);
+            $data['award_certificate'] = $photo_name3;
+        }
+
+        $certificate = BusinessProfile::create($data);
+        if (isset($request['regular_hour'])) {
+            foreach ($request['start_date'] as $key => $date) {
+                Hour::create([
+                    'business_id' => $certificate->id,
+                    'special_hour' => $request['regular_hour'],
+                    'day_name' => $request['	day_name'],
+                    'day_status' => $request['day_status'],
+                    'start_time' => $date,
+                    'end_time' => $request['end_date'][$key],
+                ]);
+            }
+
+            if (isset($request['special_hour'])) {
+                foreach ($request['start_date'] as $key => $specialdate) {
+                    Hour::create([
+                        'business_id' => $certificate->id,
+                        'special_hour' => $request['special_hour'],
+                        'day_name' => $request['	day_name'],
+                        'day_status' => $request['day_status'],
+                        'start_time' => $specialdate,
+                        'end_time' => $request['end_date'][$key],
+                    ]);
+                }
+            }
+        }
+        return response()->json(['message' => 'Business Certificate created successfully', 'certificate' => $certificate], 200);
     }
 }

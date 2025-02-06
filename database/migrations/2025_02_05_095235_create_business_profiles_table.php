@@ -21,11 +21,14 @@ return new class extends Migration
             $table->string('business_primary_category')->nullable();
             $table->text('business_secondary_categories')->nullable();
             $table->string('website')->nullable();
-
+        
             $table->text('technician_photo')->nullable();
             $table->text('vehicle_photo')->nullable();
             $table->text('facility_photo')->nullable();
             $table->text('project_photo')->nullable();
+            $table->text('insurance_certificate')->nullable();
+            $table->text('license_certificate')->nullable();
+            $table->text('award_certificate')->nullable();
             $table->timestamps();
         });
     }
