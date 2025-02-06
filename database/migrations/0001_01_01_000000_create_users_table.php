@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('sales_referred')->nullable();
             $table->integer('sales_representative')->nullable();
 
+            $table->text('location')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
