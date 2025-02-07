@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('AddCertificateHours', 'AddCertificateHours')->name('AddCertificateHours');
 
         Route::post('AddConversation', 'AddConversation')->name('AddConversation');
+        Route::post('Social', 'Social')->name('Social');
 
 
     });

@@ -9,7 +9,7 @@ use App\Models\PaymentDetail;
 use App\Models\Hour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\SocialProfile;
 class ServiceProviderController extends Controller
 {
     public function Deals(Request $request)
@@ -587,6 +587,23 @@ class ServiceProviderController extends Controller
             $conversation = BusinessProfile::create($data);
             return response()->json(['message' => 'Conversation created successfully', 'conversation' => $conversation], 200);
 
+        }
+    }
+    public function Social(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if ($user) {
+            $social = SocialProfile::where('user_id', $user->id)->first();
+            $data = $request->all();
+            if ($social) {
+                $social->update($data);
+                return response()->json(['message' => 'Social Added successfully', 'user' => $user, 'Social' => $social], 200);
+            } else {
+                $social = SocialProfile::create($data);
+            }
+            return response()->json(['message' => 'Added Social successfully', 'user' => $user, 'Social' => $social], 200);
+        } else {
+            return response()->json(['message' => 'No user found'], 200);
         }
     }
 }
