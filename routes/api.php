@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('AddCertificateHours', 'AddCertificateHours')->name('AddCertificateHours');
 
         Route::post('AddConversation', 'AddConversation')->name('AddConversation');
+        Route::post('Social', 'Social')->name('Social');
 
 
     });
@@ -60,6 +61,7 @@ Route::middleware('auth:sanctum')->group( function () {
             Route::post('AddPaymentMethod', 'AddPaymentMethod')->name('AddPaymentMethod');
             Route::get('DeletePaymentMethod/{id}', 'DeletePaymentMethod')->name('DeletePaymentMethod');
             Route::post('UpdatePaymentMethod', 'UpdatePaymentMethod')->name('UpdatePaymentMethod');
+            Route::post('AddSocial', 'AddSocial')->name('AddSocial');
         });
     });
     

@@ -7,7 +7,7 @@ use App\Models\PaymentMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\SocialProfile;
 class CustomerController extends Controller
 {
     public function MyDetail(Request $request)
@@ -88,6 +88,23 @@ class CustomerController extends Controller
             return response()->json(['deals' => $deals], 200);
         } else {
             return response()->json(['message' => 'No deals found'], 200);
+        }
+    }
+    public function AddSocial(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if ($user) {
+            $social = SocialProfile::where('user_id', $user->id)->first();
+            $data = $request->all();
+            if ($social) {
+                $social->update($data);
+                return response()->json(['message' => 'Social Added successfully', 'user' => $user, 'Social' => $social], 200);
+            } else {
+                $social = SocialProfile::create($data);
+            }
+            return response()->json(['message' => 'Added Social successfully', 'user' => $user, 'Social' => $social], 200);
+        } else {
+            return response()->json(['message' => 'No user found'], 200);
         }
     }
 }
