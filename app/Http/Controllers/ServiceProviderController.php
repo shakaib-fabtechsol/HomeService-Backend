@@ -572,4 +572,21 @@ class ServiceProviderController extends Controller
         }
         return response()->json(['message' => 'Business Certificate created successfully', 'certificate' => $certificate], 200);
     }
+
+    public function AddConversation(Request $request){
+
+        $data=$request->all();
+        if(!empty($request->id)){
+        
+            $conversation = BusinessProfile::find($request->id);
+            $conversation->update($data);
+            return response()->json(['message' => 'Conversation updated successfully', 'conversation' => $conversation], 200);
+        
+        }else{
+
+            $conversation = BusinessProfile::create($data);
+            return response()->json(['message' => 'Conversation created successfully', 'conversation' => $conversation], 200);
+
+        }
+    }
 }
