@@ -32,13 +32,11 @@ class ServiceProviderController extends Controller
         }
     }
 
-    public function DealPublish(Request $request)
+    public function DealPublish($id)
     {
-        $deal = Deal::find($request->id);
+        $deal = Deal::find($id);
         if ($deal) {
-            $data = $request->all();
-            $data['publish'] = 1;
-            $deal->update($data);
+            $deal->update(['publish'=>1]);
             return response()->json(['message' => 'Deal Publish successfully', 'deal' => $deal], 200);
         } else {
             return response()->json(['message' => 'No deals found'], 200);
