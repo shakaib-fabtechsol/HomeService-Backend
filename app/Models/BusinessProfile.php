@@ -22,6 +22,8 @@ class BusinessProfile extends Model
         'insurance_certificate',
         'license_certificate',
         'award_certificate',
+        'regular_hour',
+        'special_hour',
         'conversation_call_number',
         'conversation_text_number',
         'conversation_email',
