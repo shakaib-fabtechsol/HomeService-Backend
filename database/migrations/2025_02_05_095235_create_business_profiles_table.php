@@ -29,6 +29,8 @@ return new class extends Migration
             $table->text('insurance_certificate')->nullable();
             $table->text('license_certificate')->nullable();
             $table->text('award_certificate')->nullable();
+            $table->text('regular_hour')->nullable();
+            $table->text('special_hour')->nullable();
             $table->text('conversation_call_number')->nullable();
             $table->text('conversation_text_number')->nullable();
             $table->text('conversation_email')->nullable();

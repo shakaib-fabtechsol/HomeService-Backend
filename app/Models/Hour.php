@@ -16,8 +16,5 @@ class Hour extends Model
         'end_time',
         'special_start_time',
         'special_end_time',
-
-
-
     ];
 }
