@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Customer',
-            'email' => 'customer@gmail.com',
+            'email' => 'customer@example.com',
             'role' => 1,
             'phone' => '123456789',
             'terms' => 1,
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Service Provider',
-            'email' => 'serviceprovider@gmail.com',
+            'email' => 'provider@example.com',
             'role' => 2,
             'phone' => '123456789',
             'terms' => 1,
