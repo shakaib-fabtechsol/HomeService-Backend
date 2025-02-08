@@ -543,56 +543,10 @@ class ServiceProviderController extends Controller
             $data['award_certificate'] = $photo_name3;
         }
 
-        $regularHourData = [];
-        $specialHourData = [];
        
-        foreach ($request->input('day_name') as $key => $dayName) {
-            
-            $regularIntervals = [];
-            if (
-                isset($request->input('start_date')[$key]) &&
-                isset($request->input('end_date')[$key]) &&
-                !empty($request->input('start_date')[$key]) &&
-                !empty($request->input('end_date')[$key])
-            ) {
-                $regularIntervals[] = [
-                    'start_time' => $request->input('start_date')[$key],
-                    'end_time'   => $request->input('end_date')[$key],
-                ];
-            }
-    
-           
-            $specialIntervals = [];
-            if (
-                isset($request->input('special_start_time')[$key]) &&
-                isset($request->input('special_end_time')[$key]) &&
-                !empty($request->input('special_start_time')[$key]) &&
-                !empty($request->input('special_end_time')[$key])
-            ) {
-                $specialIntervals[] = [
-                    'special_start_time' => $request->input('special_start_time')[$key],
-                    'special_end_time'   => $request->input('special_end_time')[$key],
-                ];
-            }
-    
-            
-            $regularHourData[] = [
-                'day_name'     => $dayName,
-                'day_status'   => $request->input('day_status')[$key] ?? 'closed',
-                'regular_hour' => $regularIntervals,
-            ];
-    
-            
-            $specialHourData[] = [
-                'day_name'     => $dayName,
-                'day_status'   => $request->input('day_status')[$key] ?? 'closed',
-                'special_hour' => $specialIntervals,
-            ];
-        }
-        $data['regular_hour'] = $regularHourData;
-        $data['special_hour'] = $specialHourData;
 
             $certificate = BusinessProfile::create($data);
+            dd($certificate);
         
         return response()->json(['message' => 'Business Certificate created successfully', 'certificate' => $certificate], 200);
     }
