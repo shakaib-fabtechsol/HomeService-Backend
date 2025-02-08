@@ -49,6 +49,10 @@ Route::middleware('auth:sanctum')->group( function () {
 
         Route::post('AddConversation', 'AddConversation')->name('AddConversation');
         Route::post('Social', 'Social')->name('Social');
+        Route::get('UserDetails/{id}', 'UserDetails')->name('UserDetails');
+        Route::post('SocialDelete', 'SocialDelete')->name('SocialDelete');
+
+
 
 
     });
