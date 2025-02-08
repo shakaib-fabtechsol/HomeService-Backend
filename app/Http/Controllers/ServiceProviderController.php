@@ -546,7 +546,7 @@ class ServiceProviderController extends Controller
        
 
             $certificate = BusinessProfile::create($data);
-            dd($certificate);
+        
         
         return response()->json(['message' => 'Business Certificate created successfully', 'certificate' => $certificate], 200);
     }
