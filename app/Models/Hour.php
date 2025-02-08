@@ -14,6 +14,10 @@ class Hour extends Model
         'day_status',
         'start_time',
         'end_time',
+        'special_start_time',
+        'special_end_time',
+
+
 
     ];
 }

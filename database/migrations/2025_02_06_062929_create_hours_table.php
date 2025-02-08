@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('day_status')->nullable();
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
+            $table->timestamp('special_start_time')->nullable();
+            $table->timestamp('special_end_time')->nullable();
             $table->timestamps();
         });
     }

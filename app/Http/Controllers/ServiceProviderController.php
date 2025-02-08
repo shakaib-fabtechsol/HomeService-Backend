@@ -544,31 +544,24 @@ class ServiceProviderController extends Controller
         }
 
         $certificate = BusinessProfile::create($data);
-        if (isset($request['regular_hour'])) {
+       
             foreach ($request['start_date'] as $key => $date) {
                 Hour::create([
                     'business_id' => $certificate->id,
-                    'special_hour' => $request['regular_hour'],
-                    'day_name' => $request['	day_name'],
+                    'regular_hour' => $request['regular_hour'],
+                    'special_hour' => $request['special_hour'],
+                    'day_name' => $request['day_name'],
                     'day_status' => $request['day_status'],
                     'start_time' => $date,
                     'end_time' => $request['end_date'][$key],
+                    'special_start_time' => $request['special_start_time'][$key],
+                    'special_end_time' => $request['special_end_time'][$key],
+
+
                 ]);
             }
 
-            if (isset($request['special_hour'])) {
-                foreach ($request['start_date'] as $key => $specialdate) {
-                    Hour::create([
-                        'business_id' => $certificate->id,
-                        'special_hour' => $request['special_hour'],
-                        'day_name' => $request['	day_name'],
-                        'day_status' => $request['day_status'],
-                        'start_time' => $specialdate,
-                        'end_time' => $request['end_date'][$key],
-                    ]);
-                }
-            }
-        }
+        
         return response()->json(['message' => 'Business Certificate created successfully', 'certificate' => $certificate], 200);
     }
 
@@ -608,7 +601,8 @@ class ServiceProviderController extends Controller
     public function UserDetails($id){
 
         $user=User::find($id);
-        $businessProfile=BusinessProfile::where('user_id',$id)->get();
+        $businessProfile=BusinessProfile::leftjoin('hours','hours.business_id','=','business_profiles.id')->select('business_profiles.*','hours.*')->where('user_id',$id)->get();
+
         $getPayment=PaymentDetail::where('user_id',$id)->get();
 
         if($user){
