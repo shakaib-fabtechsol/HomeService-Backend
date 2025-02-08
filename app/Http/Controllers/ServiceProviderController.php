@@ -546,7 +546,7 @@ class ServiceProviderController extends Controller
         $certificate = BusinessProfile::create($data);
        
             foreach ($request['start_date'] as $key => $date) {
-                Hour::create([
+                $hour=Hour::create([
                     'business_id' => $certificate->id,
                     'regular_hour' => $request['regular_hour'],
                     'special_hour' => $request['special_hour'],
@@ -562,7 +562,7 @@ class ServiceProviderController extends Controller
             }
 
         
-        return response()->json(['message' => 'Business Certificate created successfully', 'certificate' => $certificate], 200);
+        return response()->json(['message' => 'Business Certificate created successfully', 'certificate' => $certificate,'hour' => $hour], 200);
     }
 
     public function AddConversation(Request $request){
