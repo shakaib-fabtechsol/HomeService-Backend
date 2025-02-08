@@ -37,6 +37,7 @@ class ServiceProviderController extends Controller
         $deal = Deal::find($id);
         if ($deal) {
             $deal->update(['publish'=>1]);
+            $deal = Deal::find($id);
             return response()->json(['message' => 'Deal Publish successfully', 'deal' => $deal], 200);
         } else {
             return response()->json(['message' => 'No deals found'], 200);
@@ -603,5 +604,59 @@ class ServiceProviderController extends Controller
         } else {
             return response()->json(['message' => 'No user found'], 200);
         }
+    }
+    public function UserDetails($id){
+
+        $user=User::find($id);
+        $businessProfile=BusinessProfile::where('user_id',$id)->get();
+        $getPayment=PaymentDetail::where('user_id',$id)->get();
+
+        if($user){
+
+            return response()->json(['user' => $user,'businessProfile' => $businessProfile,'getPayment' => $getPayment], 200);
+
+        }
+    }
+
+    public function SocialDelete(Request $request){
+
+        $social=SocialProfile::find($request->id);
+          
+        if($request['facebook'] == $social->facebook){
+
+            $social->update(['facebook'=> null]);
+
+        }
+        if($request['twitter'] == $social->twitter){
+
+            $social->update(['twitter'=> null]);
+
+        }
+        if($request['instagram'] == $social->instagram){
+
+            $social->update(['instagram'=> null]);
+
+        }
+        if($request['linkedin'] == $social->linkedin){
+
+            $social->update(['linkedin'=> null]);
+
+        }
+        if($request['youtube'] == $social->youtube){
+
+            $social->update(['youtube'=> null]);
+
+        }
+        if($request['google_business'] == $social->google_business){
+
+            $social->update(['google_business'=> null]);
+
+        }
+        if ($social && is_null($social->facebook) && is_null($social->twitter) && is_null($social->instagram) && is_null($social->linkedin) && is_null($social->youtube) && is_null($social->google_business)) {
+            $social->delete();
+        }
+        return response()->json(['social' => $social], 200);
+
+
     }
 }
