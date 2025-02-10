@@ -35,6 +35,11 @@ return new class extends Migration
             $table->text('conversation_text_number')->nullable();
             $table->text('conversation_email')->nullable();
             $table->text('conversation_address')->nullable();
+            $table->string('service_location_type')->nullable();
+            $table->text('business_location')->nullable();
+            $table->text('service_location')->nullable();
+            $table->text('restrict_location')->nullable();
+            $table->text('location_miles')->nullable();
             $table->timestamps();
         });
     }

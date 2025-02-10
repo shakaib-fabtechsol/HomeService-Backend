@@ -595,7 +595,7 @@ class ServiceProviderController extends Controller
     public function UserDetails($id){
 
         $user=User::find($id);
-        $businessProfile=BusinessProfile::leftjoin('hours','hours.business_id','=','business_profiles.id')->select('business_profiles.*','hours.*')->where('user_id',$id)->get();
+        $businessProfile=BusinessProfile::where('user_id',$id)->get();
 
         $getPayment=PaymentDetail::where('user_id',$id)->get();
 
@@ -646,5 +646,24 @@ class ServiceProviderController extends Controller
         return response()->json(['social' => $social], 200);
 
 
+    }
+    public function AddBusinessLocation(Request $request){
+
+        $data=$request->all();
+
+        $servicelocation = BusinessProfile::create($data);
+        return response()->json(['message' => 'Service Location created successfully', 'servicelocation' => $servicelocation], 200);
+
+
+    }
+
+    public function UpdateBusinessLocation(Request $request){
+
+        $data=$request->all();
+        $businesslocation=BusinessProfile::find($request->id);
+
+        $businesslocation->update($data);
+
+        return response()->json(['message' => 'Service Location updated successfully', 'servicelocation' => $businesslocation], 200);
     }
 }
