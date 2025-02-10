@@ -10,6 +10,8 @@ use App\Models\Hour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\SocialProfile;
+use Illuminate\Support\Facades\Auth;
+
 class ServiceProviderController extends Controller
 {
     public function Deals(Request $request)
@@ -66,6 +68,8 @@ class ServiceProviderController extends Controller
                 return response()->json(['message' => 'No deals found'], 200);
             }
         } else {
+            $userId = Auth::id();
+            $data['user_id'] = $userId;
             $data['publish'] = 0;
             $deal = Deal::create($data);
             return response()->json(['message' => 'Added new deal successfully', 'deal' => $deal], 200);
@@ -143,6 +147,8 @@ class ServiceProviderController extends Controller
                 return response()->json(['message' => 'No deals found'], 200);
             }
         } else {
+            $userId = Auth::id();
+            $data['user_id'] = $userId;
             $data['publish'] = 0;
             $deal = Deal::create($data);
             return response()->json(['message' => 'Added new package deal successfully', 'deal' => $deal], 200);
@@ -181,6 +187,8 @@ class ServiceProviderController extends Controller
                 $photo1->move($photo_destination, $photo_name1);
                 $data['image'] = $photo_name1;
                 $data['publish'] = 0;
+                $userId = Auth::id();
+                $data['user_id'] = $userId;
                 $deal = Deal::create($data);
                 return response()->json(['message' => 'Added new deal with Image successfully', 'deal' => $deal], 200);
             } else {

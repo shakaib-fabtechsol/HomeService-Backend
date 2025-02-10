@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Deal extends Model
 {
     protected $fillable = [
+        'user_id',
         'service_title',
         'commercial',
         'residential',
