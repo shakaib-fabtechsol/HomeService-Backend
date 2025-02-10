@@ -578,20 +578,52 @@ class ServiceProviderController extends Controller
     public function Social(Request $request)
     {
         $user = User::find($request->user_id);
-        if ($user) {
-            $social = SocialProfile::where('user_id', $user->id)->first();
-            $data = $request->all();
-            if ($social) {
-                $social->update($data);
-                return response()->json(['message' => 'Social Added successfully', 'user' => $user, 'Social' => $social], 200);
-            } else {
-                $social = SocialProfile::create($data);
-            }
-            return response()->json(['message' => 'Added Social successfully', 'user' => $user, 'Social' => $social], 200);
+        if (!$user) {
+            return response()->json(['message' => 'No user found'], 404);
+        }
+    
+        $social = SocialProfile::where('user_id', $user->id)->first();
+        $data = $request->all();
+    
+       
+        if ($request->has('facebook') && !preg_match('/^(https?:\/\/)?(www\.)?facebook\.com\/[a-zA-Z0-9(\.\?)?]/', $request->facebook)) {
+            return response()->json(['message' => 'Invalid Facebook URL'], 400);
+        }
+    
+       
+        if ($request->has('twitter') && !preg_match('/^(https?:\/\/)?(www\.)?twitter\.com\/[a-zA-Z0-9_]+$/', $request->twitter)) {
+            return response()->json(['message' => 'Invalid Twitter URL'], 400);
+        }
+    
+       
+        if ($request->has('instagram') && !preg_match('/^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_]+\/?$/', $request->instagram)) {
+            return response()->json(['message' => 'Invalid Instagram URL'], 400);
+        }
+    
+     
+        if ($request->has('linkedin') && !preg_match('/^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/', $request->linkedin)) {
+            return response()->json(['message' => 'Invalid LinkedIn URL'], 400);
+        }
+    
+      
+        if ($request->has('youtube') && !preg_match('/^(https?:\/\/)?(www\.)?youtube\.com\/(channel|c|user)\/[a-zA-Z0-9_-]+$/', $request->youtube)) {
+            return response()->json(['message' => 'Invalid YouTube URL'], 400);
+        }
+    
+     
+        if ($request->has('google_business') && !preg_match('/^(https?:\/\/)?(www\.)?g\.page\/[a-zA-Z0-9_-]+$/', $request->google_business)) {
+            return response()->json(['message' => 'Invalid Google Business URL'], 400);
+        }
+    
+        if ($social) {
+            $social->update($data);
+            return response()->json(['message' => 'Social profile updated successfully', 'user' => $user, 'Social' => $social], 200);
         } else {
-            return response()->json(['message' => 'No user found'], 200);
+            $social = SocialProfile::create($data);
+            return response()->json(['message' => 'Social profile added successfully', 'user' => $user, 'Social' => $social], 200);
         }
     }
+    
     public function UserDetails($id){
 
         $user=User::find($id);
