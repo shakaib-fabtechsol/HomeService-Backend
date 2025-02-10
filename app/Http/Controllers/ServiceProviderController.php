@@ -585,36 +585,6 @@ class ServiceProviderController extends Controller
                 $social->update($data);
                 return response()->json(['message' => 'Social Added successfully', 'user' => $user, 'Social' => $social], 200);
             } else {
-                if($data['facebook'] != 'https//www.facebook.com'){
-                    
-                    return response()->json(['message' => 'Enter Valid Link.'], 200);
-
-                }
-                if($data['twitter'] != 'https//www.twitter.com'){
-                    
-                    return response()->json(['message' => 'Enter Valid Link.'], 200);
-
-                }
-                if($data['instagram'] != 'https//www.instagram.com'){
-                    
-                    return response()->json(['message' => 'Enter Valid Link.'], 200);
-
-                }
-                if($data['linkedin'] != 'https//www.linkedin.com'){
-                    
-                    return response()->json(['message' => 'Enter Valid Link.'], 200);
-
-                }
-                if($data['youtube'] != 'https//www.youtube.com'){
-                    
-                    return response()->json(['message' => 'Enter Valid Link.'], 200);
-
-                }
-                if($data['linkedin'] != 'https//www.business.google.com'){
-                    
-                    return response()->json(['message' => 'Enter Valid Link.'], 200);
-
-                }
                 $social = SocialProfile::create($data);
             }
             return response()->json(['message' => 'Added Social successfully', 'user' => $user, 'Social' => $social], 200);
