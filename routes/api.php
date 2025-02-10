@@ -60,6 +60,7 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::prefix('Customer')->group(function () {
         Route::controller(CustomerController::class)->group(function () {
             Route::get('ListDeals', 'ListDeals')->name('ListDeals');
+            Route::get('SingleDeal/{id}', 'SingleDeal')->name('SingleDeal');
             Route::post('MyDetail', 'MyDetail')->name('MyDetail');
             Route::post('NewPassword', 'NewPassword')->name('NewPassword');
             Route::post('AddPaymentMethod', 'AddPaymentMethod')->name('AddPaymentMethod');
@@ -67,6 +68,6 @@ Route::middleware('auth:sanctum')->group( function () {
             Route::post('UpdatePaymentMethod', 'UpdatePaymentMethod')->name('UpdatePaymentMethod');
             Route::post('AddSocial', 'AddSocial')->name('AddSocial');
         });
-    });
+    }); 
     
 });

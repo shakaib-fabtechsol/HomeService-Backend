@@ -90,6 +90,16 @@ class CustomerController extends Controller
             return response()->json(['message' => 'No deals found'], 200);
         }
     }
+
+    public function SingleDeal($id)
+    {
+        $deal = Deal::where('id', $id)->get();
+        if ($deal) {
+            return response()->json(['deal' => $deal], 200);
+        } else {
+            return response()->json(['message' => 'No deal found'], 200);
+        }
+    }
     public function AddSocial(Request $request)
     {
         $user = User::find($request->user_id);
