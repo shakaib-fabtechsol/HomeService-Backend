@@ -28,6 +28,16 @@ class BusinessProfile extends Model
         'conversation_text_number',
         'conversation_email',
         'conversation_address',
+        'service_location_type',
+        'business_location',
+        'service_location',
+        'restrict_location',
+        'location_miles',
+
+
+
+
+
 
 
 
