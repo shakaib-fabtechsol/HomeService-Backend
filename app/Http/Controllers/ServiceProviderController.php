@@ -16,7 +16,8 @@ class ServiceProviderController extends Controller
 {
     public function Deals(Request $request)
     {
-        $deals = Deal::orderBy('id', 'desc')->get();
+        $userId = Auth::id();
+        $deals = Deal::where('user_id', $userId)->orderBy('id', 'desc')->get();
         if ($deals) {
             return response()->json(['deals' => $deals], 200);
         } else {
