@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BusinessProfile;
 use App\Models\Deal;
 use App\Models\PaymentMethod;
 use App\Models\User;
@@ -158,5 +159,12 @@ class CustomerController extends Controller
         return response()->json(['social' => $social], 200);
 
 
+    }
+
+    public function DealProvider($user_id){
+        $user = User::find($user_id);
+        $deals = Deal::where('user_id',$user_id)->get();
+        $business = BusinessProfile::where('user_id',$user_id)->first();
+        return response()->json(['message' => 'Social Added successfully', 'user' => $user, 'deals' => $deals, 'business' => $business], 200);
     }
 }
