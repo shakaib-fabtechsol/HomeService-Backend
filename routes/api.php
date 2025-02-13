@@ -76,9 +76,9 @@ Route::middleware('auth:sanctum')->group( function () {
             Route::post('AddSocial', 'AddSocial')->name('AddSocial');
             Route::post('DeleteSocial', 'DeleteSocial')->name('DeleteSocial');
             Route::get('DealProvider/{user_id}', 'DealProvider')->name('DealProvider');
+            Route::get('DetailUser/{id}', 'DetailUser')->name('DetailUser');
         });
     });
     
-
 }); 
 
