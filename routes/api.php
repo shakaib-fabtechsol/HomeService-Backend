@@ -74,7 +74,11 @@ Route::middleware('auth:sanctum')->group( function () {
             Route::get('DeletePaymentMethod/{id}', 'DeletePaymentMethod')->name('DeletePaymentMethod');
             Route::post('UpdatePaymentMethod', 'UpdatePaymentMethod')->name('UpdatePaymentMethod');
             Route::post('AddSocial', 'AddSocial')->name('AddSocial');
+            Route::post('DeleteSocial', 'DeleteSocial')->name('DeleteSocial');
+            Route::get('DealProvider/{user_id}', 'DealProvider')->name('DealProvider');
         });
-    }); 
+    });
     
-});
+
+}); 
+
