@@ -167,4 +167,17 @@ class CustomerController extends Controller
         $business = BusinessProfile::where('user_id',$user_id)->first();
         return response()->json(['message' => 'Social Added successfully', 'user' => $user, 'deals' => $deals, 'business' => $business], 200);
     }
+
+    public function DetailUser($id){
+
+        $user=User::find($id);
+
+        $PaymentMethod=PaymentMethod::where('user_id',$id)->get();
+
+        if($user){
+
+            return response()->json(['user' => $user, 'PaymentMethod' => $PaymentMethod], 200);
+
+        }
+    }
 }
