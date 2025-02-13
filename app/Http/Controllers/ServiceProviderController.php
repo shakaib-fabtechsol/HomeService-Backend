@@ -529,7 +529,50 @@ class ServiceProviderController extends Controller
     public function AddCertificateHours(Request $request)
     {
         $data = $request->all();
+        if(!empty($request->id)){
+        $updateCertificateHours=BusinessProfile::where('user_id',$request->id)->first();
+        if ($request->hasFile('insurance_certificate')) {
+            $imagePath = public_path('uploads/' . $updateCertificateHours->insurance_certificate);
+            if (!empty($updateCertificateHours->insurance_certificate) && file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+            $photo1 = $request->file('insurance_certificate');
+            $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+            $photo_destination = public_path('uploads');
+            $photo1->move($photo_destination, $photo_name1);
+            $data['insurance_certificate'] = $photo_name1;
+            
+        }
+        if ($request->hasFile('license_certificate')) {
+            $imagePath = public_path('uploads/' . $updateCertificateHours->license_certificate);
+            if (!empty($updateCertificateHours->license_certificate) && file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+            $photo2 = $request->file('license_certificate');
+            $photo_name2 = time() . '-' . $photo2->getClientOriginalName();
+            $photo_destination = public_path('uploads');
+            $photo2->move($photo_destination, $photo_name2);
+            $data['license_certificate'] = $photo_name2;
+            
+        }
+        if ($request->hasFile('award_certificate')) {
+            $imagePath = public_path('uploads/' . $updateCertificateHours->award_certificate);
+            if (!empty($updateCertificateHours->award_certificate) && file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+            $photo3 = $request->file('award_certificate');
+            $photo_name3 = time() . '-' . $photo3->getClientOriginalName();
+            $photo_destination = public_path('uploads');
+            $photo3->move($photo_destination, $photo_name3);
+            $data['award_certificate'] = $photo_name3;
+            
+        }
+        $updateCertificateHours->update($data);
 
+        return response()->json(['message' => 'CertificateHour updated successfully', 'updateCertificateHours' => $updateCertificateHours], 200);
+        }else{
+            
+        
         if ($request->hasFile('insurance_certificate')) {
             $photo1 = $request->file('insurance_certificate');
             $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
@@ -558,6 +601,7 @@ class ServiceProviderController extends Controller
         
         
         return response()->json(['message' => 'Business Certificate created successfully', 'certificate' => $certificate], 200);
+    }
     }
 
     public function UpdateCertificateHours(Request $request){
