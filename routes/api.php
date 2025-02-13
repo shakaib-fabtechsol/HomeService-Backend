@@ -46,6 +46,8 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('AdditionalPhotos', 'AdditionalPhotos')->name('AdditionalPhotos');
 
         Route::post('AddCertificateHours', 'AddCertificateHours')->name('AddCertificateHours');
+        Route::post('UpdateCertificateHours', 'UpdateCertificateHours')->name('UpdateCertificateHours');
+
 
         Route::post('AddConversation', 'AddConversation')->name('AddConversation');
         Route::post('Social', 'Social')->name('Social');
