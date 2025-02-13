@@ -55,6 +55,8 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('SocialDelete', 'SocialDelete')->name('SocialDelete');
         Route::post('AddBusinessLocation', 'AddBusinessLocation')->name('AddBusinessLocation');
         Route::post('UpdateBusinessLocation', 'UpdateBusinessLocation')->name('UpdateBusinessLocation');
+        Route::get('GetBusiness/{id}', 'GetBusiness')->name('GetBusiness');
+        
 
 
 
@@ -77,4 +79,6 @@ Route::middleware('auth:sanctum')->group( function () {
         });
     });
     
+
 }); 
+

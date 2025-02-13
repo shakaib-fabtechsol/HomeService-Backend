@@ -745,5 +745,14 @@ class ServiceProviderController extends Controller
 
         return response()->json(['message' => 'Service Location updated successfully', 'servicelocation' => $businesslocation], 200);
     }
+
+    public function GetBusiness($id){
+
+        $getBusiness=BusinessProfile::where('user_id',$id)->first();
+        $getSocial=SocialProfile::where('user_id',$id)->first();
+
+        return response()->json(['getBusiness' => $getBusiness,'getSocial' => $getSocial], 200);
+        
+    }
     
 }
