@@ -676,10 +676,10 @@ class ServiceProviderController extends Controller
 
         $getPayment=PaymentDetail::where('user_id',$id)->get();
         $getDeal=Deal::where('user_id',$id)->get();
-
+        $getSocial=SocialProfile::where('user_id',$id)->get();
         if($user){
 
-            return response()->json(['user' => $user,'businessProfile' => $businessProfile,'getPayment' => $getPayment,'getDeal' => $getDeal], 200);
+            return response()->json(['user' => $user,'businessProfile' => $businessProfile,'getPayment' => $getPayment,'getDeal' => $getDeal,'getSocial' => $getSocial], 200);
 
         }
     }
