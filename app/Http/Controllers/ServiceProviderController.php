@@ -562,7 +562,7 @@ class ServiceProviderController extends Controller
 
     public function UpdateCertificateHours(Request $request){
         $data=$request->all();
-        $updateCertificateHours=BusinessProfile::find($request->id);
+        $updateCertificateHours=BusinessProfile::where('user_id',$request->id)->first();
         if ($request->hasFile('insurance_certificate')) {
             $imagePath = public_path('uploads/' . $updateCertificateHours->insurance_certificate);
             if (!empty($updateCertificateHours->insurance_certificate) && file_exists($imagePath)) {
@@ -610,7 +610,7 @@ class ServiceProviderController extends Controller
         $data=$request->all();
         if(!empty($request->id)){
         
-            $conversation = BusinessProfile::find($request->id);
+            $conversation = BusinessProfile::where('user_id',$request->id)->first();
             $conversation->update($data);
             return response()->json(['message' => 'Conversation updated successfully', 'conversation' => $conversation], 200);
         
