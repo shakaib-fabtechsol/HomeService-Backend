@@ -83,7 +83,9 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::prefix('SuperAdmin')->group(function () {
         Route::controller(SuperAdminController::class)->group(function () {
-            
+            Route::get('ServiceProviders', 'ServiceProviders')->name('ServiceProviders');
+            Route::get('ProviderDetail/{user_id}', 'ProviderDetail')->name('ProviderDetail');
+            Route::get('Customers', 'Customers')->name('Customers');
         });
     });
 }); 
