@@ -39,5 +39,20 @@ class DatabaseSeeder extends Seeder
             'terms' => 1,
             'password' => 'aszx1234',
         ]);
+        User::factory()->create([
+            'name' => 'Sales Reps',
+            'email' => 'salesreps@example.com',
+            'role' => 3,
+            'phone' => '123456789',
+            'terms' => 1,
+            'password' => 'aszx1234',
+            'created_by' => 0,
+            'permission_1' => '1',
+            'permission_2' => '2',
+            'permission_3' => '3',
+            
+            
+            
+        ]);
     }
 }
