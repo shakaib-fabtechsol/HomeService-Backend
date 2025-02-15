@@ -94,13 +94,16 @@ Route::middleware('auth:sanctum')->group(function () {
         });
     });
 
-    Route::prefix('SaleRep')->group(function () {
-        Route::controller(SaleRapController::class)->group(function () {
+    
+});
 
-            Route::get('SaleRepProviders', 'SaleRepProviders')->name('SaleRepProviders');
-            Route::get('Dashboard', 'Dashboard')->name('Dashboard');
-            
-          
-        });
+Route::prefix('SaleRep')->group(function () {
+    Route::controller(SaleRapController::class)->group(function () {
+
+        Route::get('SaleRepProviders', 'SaleRepProviders')->name('SaleRepProviders');
+        Route::get('Dashboard', 'Dashboard')->name('Dashboard');
+        Route::post('SalesPersonal', 'SalesPersonal')->name('SalesPersonal');
+        Route::post('SalesSecurity', 'SalesSecurity')->name('SalesSecurity');
+      
     });
 });
