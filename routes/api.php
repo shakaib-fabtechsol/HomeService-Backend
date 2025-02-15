@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServiceProviderController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\SaleRapController;
+
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('Register', 'Register')->name('Register');
@@ -89,6 +91,16 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('UpdatePersonal', 'UpdatePersonal')->name('UpdatePersonal');
             Route::post('Security', 'Security')->name('Security');
             Route::post('NotificationSetting', 'NotificationSetting')->name('NotificationSetting');
+        });
+    });
+
+    Route::prefix('SaleRep')->group(function () {
+        Route::controller(SaleRapController::class)->group(function () {
+
+            Route::get('SaleRepProviders', 'SaleRepProviders')->name('SaleRepProviders');
+            Route::get('Dashboard', 'Dashboard')->name('Dashboard');
+            
+          
         });
     });
 });
