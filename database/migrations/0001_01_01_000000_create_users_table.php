@@ -31,6 +31,12 @@ return new class extends Migration
             $table->string('permission_1')->nullable();
             $table->string('permission_2')->nullable();
             $table->string('permission_3')->nullable();
+
+            $table->integer('general_notification')->nullable();
+            $table->integer('provider_notification')->nullable();
+            $table->integer('customer_notification')->nullable();
+            $table->integer('sales_notification')->nullable();
+            $table->integer('message_notification')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

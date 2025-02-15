@@ -33,8 +33,11 @@ class User extends Authenticatable
         'permission_1',
         'permission_2',
         'permission_3',
-
-
+        'general_notification',
+        'provider_notification',
+        'customer_notification',
+        'sales_notification',
+        'message_notification',
         
     ];
 
