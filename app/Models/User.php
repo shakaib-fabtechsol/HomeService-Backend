@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'lastname',
         'email',
         'password',
         'phone',
@@ -28,6 +29,13 @@ class User extends Authenticatable
         'sales_referred',
         'sales_representative',
         'location',
+        'created_by',
+        'permission_1',
+        'permission_2',
+        'permission_3',
+
+
+        
     ];
 
     /**
