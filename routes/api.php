@@ -83,8 +83,11 @@ Route::middleware('auth:sanctum')->group( function () {
 
     Route::prefix('SuperAdmin')->group(function () {
         Route::controller(SuperAdminController::class)->group(function () {
-            
+            Route::post('AddSalesReps', 'AddSalesReps')->name('AddSalesReps');
+            Route::get('ViewSalesReps/{id}', 'ViewSalesReps')->name('ViewSalesReps');
+            Route::post('UpdateSalesReps', 'UpdateSalesReps')->name('UpdateSalesReps');
+            Route::get('DeleteSalesReps/{id}', 'DeleteSalesReps')->name('DeleteSalesReps');
+
         });
     });
 }); 
-
