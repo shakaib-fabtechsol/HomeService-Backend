@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServiceProviderController;
+use App\Http\Controllers\SuperAdminController;
 
 Route::controller(AuthController::class)->group(function () {
 Route::post('Register','Register')->name('Register');
@@ -79,6 +80,11 @@ Route::middleware('auth:sanctum')->group( function () {
             Route::get('DetailUser/{id}', 'DetailUser')->name('DetailUser');
         });
     });
-    
+
+    Route::prefix('SuperAdmin')->group(function () {
+        Route::controller(SuperAdminController::class)->group(function () {
+            
+        });
+    });
 }); 
 
