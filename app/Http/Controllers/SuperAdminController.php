@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class SuperAdminController extends Controller
 {
-    //
     public function ServiceProviders()
     {
         $serviceProviders = DB::table('users')
@@ -51,11 +50,12 @@ class SuperAdminController extends Controller
             return response()->json(['message' => 'No Customer Available'], 200);
         }
     }
-  public function AddSalesReps(Request $request){
-      
-      
-        $data=$request->all();
-      
+    public function AddSalesReps(Request $request)
+    {
+
+
+        $data = $request->all();
+
         if ($request->hasFile('personal_image')) {
             $photo1 = $request->file('personal_image');
             $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
@@ -65,45 +65,45 @@ class SuperAdminController extends Controller
         }
         $data['terms'] = 1;
         $Salesreps = User::create($data);
-        
-        
-        return response()->json(['message' => 'Sales Reps created successfully', 'Salesreps' => $Salesreps], 200); 
-        
-    }
-    
-    public function ViewSalesReps($id){
 
-        $GetSalesReps=User::find($id);
+
+        return response()->json(['message' => 'Sales Reps created successfully', 'Salesreps' => $Salesreps], 200);
+    }
+
+    public function ViewSalesReps($id)
+    {
+
+        $GetSalesReps = User::find($id);
 
         return response()->json(['GetSalesReps' => $GetSalesReps], 200);
-        
     }
 
-    public function UpdateSalesReps(Request $request){
+    public function UpdateSalesReps(Request $request)
+    {
 
-      $data=$request->all();
-      
-      $GetSaleRep=User::find($request->id);
-      if ($request->hasFile('personal_image')) {
-        $imagePath = public_path('uploads/' . $GetSaleRep->personal_image);
-        if (!empty($GetSaleRep->personal_image) && file_exists($imagePath)) {
-            unlink($imagePath);
+        $data = $request->all();
+
+        $GetSaleRep = User::find($request->id);
+        if ($request->hasFile('personal_image')) {
+            $imagePath = public_path('uploads/' . $GetSaleRep->personal_image);
+            if (!empty($GetSaleRep->personal_image) && file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+            $photo1 = $request->file('personal_image');
+            $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+            $photo_destination = public_path('uploads');
+            $photo1->move($photo_destination, $photo_name1);
+            $data['personal_image'] = $photo_name1;
         }
-        $photo1 = $request->file('personal_image');
-        $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
-        $photo_destination = public_path('uploads');
-        $photo1->move($photo_destination, $photo_name1);
-        $data['personal_image'] = $photo_name1;
-        
-    }
-      $GetSaleRep->update($data);
-      
-      return response()->json(['message' => 'Sales Reps updated successfully', 'GetSaleRep' => $GetSaleRep], 200);
+        $GetSaleRep->update($data);
+
+        return response()->json(['message' => 'Sales Reps updated successfully', 'GetSaleRep' => $GetSaleRep], 200);
     }
 
-    public function DeleteSalesReps($id){
+    public function DeleteSalesReps($id)
+    {
 
-        $GetSaleRep=User::find($id);
+        $GetSaleRep = User::find($id);
         $imagePath = public_path('uploads/' . $GetSaleRep->personal_image);
         if (!empty($GetSaleRep->personal_image) && file_exists($imagePath)) {
             unlink($imagePath);

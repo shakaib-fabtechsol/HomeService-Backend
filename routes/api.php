@@ -9,41 +9,40 @@ use App\Http\Controllers\ServiceProviderController;
 use App\Http\Controllers\SuperAdminController;
 
 Route::controller(AuthController::class)->group(function () {
-Route::post('Register','Register')->name('Register');
-Route::post('UpdateUser','UpdateUser')->name('UpdateUser');
-Route::post('Userlogin','Userlogin')->name('Userlogin');
-
+    Route::post('Register', 'Register')->name('Register');
+    Route::post('UpdateUser', 'UpdateUser')->name('UpdateUser');
+    Route::post('Userlogin', 'Userlogin')->name('Userlogin');
 });
-Route::middleware('auth:sanctum')->group( function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::controller(ServiceProviderController::class)->group(function () {
         Route::post('BasicInfo', 'BasicInfo')->name('BasicInfo');
         Route::post('UpdateBasicInfo', 'UpdateBasicInfo')->name('UpdateBasicInfo');
-    
+
         Route::post('PriceAndPackage', 'PriceAndPackage')->name('PriceAndPackage');
         Route::post('UpdatePriceAndPackage', 'UpdatePriceAndPackage')->name('UpdatePriceAndPackage');
-    
+
         Route::post('MediaUpload', 'MediaUpload')->name('MediaUpload');
         Route::post('UpdateMediaUpload', 'UpdateMediaUpload')->name('UpdateMediaUpload');
-    
+
         Route::get('Deals', 'Deals')->name('Deals');
         Route::get('Deal/{id}', 'Deal')->name('Deal');
         Route::get('DeleteDeal/{id}', 'DeleteDeal')->name('DeleteDeal');
-    
+
         Route::get('DealPublish/{id}', 'DealPublish')->name('DealPublish');
-    
-    
+
+
         Route::post('MyDetails', 'MyDetails')->name('MyDetails');
-    
+
         Route::post('UpdatePassword', 'UpdatePassword')->name('UpdatePassword');
-    
+
         Route::post('BusinessProfile', 'BusinessProfile')->name('BusinessProfile');
-    
-    
+
+
         Route::post('AddPaymentDetails', 'AddPaymentDetails')->name('AddPaymentDetails');
         Route::post('UpdatePaymentDetails', 'UpdatePaymentDetails')->name('UpdatePaymentDetails');
-    
+
         Route::get('DeletePaymentDetails/{id}', 'DeletePaymentDetails')->name('DeletePaymentDetails');
-    
+
         Route::post('AdditionalPhotos', 'AdditionalPhotos')->name('AdditionalPhotos');
 
         Route::post('AddCertificateHours', 'AddCertificateHours')->name('AddCertificateHours');
@@ -57,12 +56,6 @@ Route::middleware('auth:sanctum')->group( function () {
         Route::post('AddBusinessLocation', 'AddBusinessLocation')->name('AddBusinessLocation');
         Route::post('UpdateBusinessLocation', 'UpdateBusinessLocation')->name('UpdateBusinessLocation');
         Route::get('GetBusiness/{id}', 'GetBusiness')->name('GetBusiness');
-        
-
-
-
-
-
     });
 
     Route::prefix('Customer')->group(function () {
@@ -92,7 +85,6 @@ Route::middleware('auth:sanctum')->group( function () {
             Route::get('ViewSalesReps/{id}', 'ViewSalesReps')->name('ViewSalesReps');
             Route::post('UpdateSalesReps', 'UpdateSalesReps')->name('UpdateSalesReps');
             Route::get('DeleteSalesReps/{id}', 'DeleteSalesReps')->name('DeleteSalesReps');
-
         });
     });
-}); 
+});
