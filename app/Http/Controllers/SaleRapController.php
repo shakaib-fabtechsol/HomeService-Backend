@@ -14,8 +14,11 @@ class SaleRapController extends Controller
 
         $GetTotalClient=User::where('role',1)->count();
         $GetCurrentMonthTotalClient=User::where('role',1)->whereMonth('created_at', Carbon::now()->month)->count();
+        $GetTotalActiveProvider=User::where('role',2)->count();
+        $GetTotalCompletedServices=Deal::where('publish',1)->count();
+       
         
-        return response()->json(['GetTotalClient' => $GetTotalClient,'GetCurrentMonthTotalClient' => $GetCurrentMonthTotalClient], 200);
+        return response()->json(['GetTotalClient' => $GetTotalClient,'GetCurrentMonthTotalClient' => $GetCurrentMonthTotalClient,'GetTotalActiveProvider' => $GetTotalActiveProvider,'GetTotalCompletedServices' => $GetTotalCompletedServices], 200);
     }
     public function SaleRepProviders()
     {
