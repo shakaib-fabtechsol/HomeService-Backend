@@ -73,6 +73,11 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('DeleteSocial', 'DeleteSocial')->name('DeleteSocial');
             Route::get('DealProvider/{user_id}', 'DealProvider')->name('DealProvider');
             Route::get('DetailUser/{id}', 'DetailUser')->name('DetailUser');
+    
+            Route::post('AddOrder', 'AddOrder')->name('AddOrder');
+            Route::post('UpdateOrder', 'UpdateOrder')->name('UpdateOrder');
+            Route::get('Orders', 'Orders')->name('Orders');
+            Route::get('Order/{id}', 'Order')->name('Order');
         });
     });
 
@@ -94,16 +99,18 @@ Route::middleware('auth:sanctum')->group(function () {
         });
     });
 
+    Route::prefix('SaleRep')->group(function () {
+        Route::controller(SaleRapController::class)->group(function () {
+    
+            Route::get('SaleRepProviders', 'SaleRepProviders')->name('SaleRepProviders');
+            Route::get('Dashboard', 'Dashboard')->name('Dashboard');
+            Route::post('SalesPersonal', 'SalesPersonal')->name('SalesPersonal');
+            Route::post('SalesSecurity', 'SalesSecurity')->name('SalesSecurity');
+          
+        });
+    });
     
 });
 
-Route::prefix('SaleRep')->group(function () {
-    Route::controller(SaleRapController::class)->group(function () {
 
-        Route::get('SaleRepProviders', 'SaleRepProviders')->name('SaleRepProviders');
-        Route::get('Dashboard', 'Dashboard')->name('Dashboard');
-        Route::post('SalesPersonal', 'SalesPersonal')->name('SalesPersonal');
-        Route::post('SalesSecurity', 'SalesSecurity')->name('SalesSecurity');
-      
-    });
-});
+
