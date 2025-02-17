@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\BusinessProfile;
 use App\Models\Deal;
+use App\Models\Order;
 use App\Models\PaymentMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\SocialProfile;
+use Illuminate\Support\Facades\Auth;
+
 class CustomerController extends Controller
 {
     public function MyDetail(Request $request)
@@ -178,6 +181,51 @@ class CustomerController extends Controller
 
             return response()->json(['user' => $user, 'PaymentMethod' => $PaymentMethod], 200);
 
+        }
+    }
+
+    public function AddOrder(Request $request)
+    {
+        $user = User::find($request->customer_id);
+        if ($user) {
+            $data = $request->all();
+            $order = Order::create($data);
+            return response()->json(['message' => 'Added Order successfully', 'user' => $user, 'order' => $order], 200);
+        } else {
+            return response()->json(['message' => 'No user found'], 200);
+        }
+    }
+
+    public function UpdateOrder(Request $request)
+    {
+        $order = Order::find($request->id);
+        if ($order) {
+            $data = $request->all();
+            $order->update($data);
+            return response()->json(['message' => 'Updated Order successfully', 'order' => $order], 200);
+        } else {
+            return response()->json(['message' => 'No order found'], 200);
+        }
+    }
+
+    public function Orders(Request $request)
+    {
+        $userId = Auth::id();
+        $orders = Order::where('customer_id', $userId)->orderBy('id', 'desc')->get();
+        if ($orders) {
+            return response()->json(['message' => 'Orders List', 'orders' => $orders], 200);
+        } else {
+            return response()->json(['message' => 'No order available'], 200);
+        }
+    }
+
+    public function Order($id)
+    {
+        $order = Order::find($id);
+        if ($order) {
+            return response()->json(['message' => 'Order Detail', 'order' => $order], 200);
+        } else {
+            return response()->json(['message' => 'No order available'], 200);
         }
     }
 }
