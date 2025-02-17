@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->id('customer_id');
-            $table->id('deal_id');
+            $table->integer('customer_id');
+            $table->integer('deal_id');
             $table->bigInteger('total_amount');
             $table->bigInteger('status');
             $table->text('notes')->nullable();
