@@ -15,6 +15,7 @@ class BusinessProfile extends Model
         'business_primary_category',
         'business_secondary_categories',
         'website',
+        'about_video',
         'technician_photo',
         'vehicle_photo',
         'facility_photo',

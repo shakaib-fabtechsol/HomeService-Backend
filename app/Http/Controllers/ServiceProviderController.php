@@ -438,6 +438,18 @@ class ServiceProviderController extends Controller
             $data = $request->all();
             $businessProfile = BusinessProfile::where('user_id', $user->id)->first();
             if ($businessProfile) {
+                if ($request->hasFile('about_video')) {
+                    $imagePath = public_path('uploads/' . $businessProfile->about_video);
+                    if (!empty($businessProfile->about_video) && file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                    $photo1 = $request->file('about_video');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['about_video'] = $photo_name1;
+                    $user->update($data);
+                }
                 if ($request->hasFile('technician_photo')) {
                     $imagePath = public_path('uploads/' . $businessProfile->technician_photo);
                     if (!empty($businessProfile->technician_photo) && file_exists($imagePath)) {
@@ -495,6 +507,13 @@ class ServiceProviderController extends Controller
                     $photo_destination = public_path('uploads');
                     $photo1->move($photo_destination, $photo_name1);
                     $data['technician_photo'] = $photo_name1;
+                }
+                if ($request->hasFile('about_video')) {
+                    $photo1 = $request->file('about_video');
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $data['about_video'] = $photo_name1;
                 }
                 if ($request->hasFile('vehicle_photo')) {
                     $photo1 = $request->file('vehicle_photo');
