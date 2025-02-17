@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->integer('deal_id');
             $table->bigInteger('total_amount');
-            $table->bigInteger('status');
+            $table->string('status');
             $table->text('notes')->nullable();
             $table->timestamps();
         });
