@@ -403,13 +403,19 @@ class ServiceProviderController extends Controller
     public function AddPaymentDetails(Request $request)
     {
         $data = $request->all();
+        $payment = PaymentDetail::find($request->id);
+        if($payment){
+           
+         $payment->update($data);
 
+        return response()->json(['message' => 'Updated Payment details successfully', 'payment' => $payment], 200);
+        }else{
         if (isset($request->user_id)) {
             $request['user_id'] = $request->user_id;
             $payment = PaymentDetail::create($data);
             return response()->json(['message' => 'Added Payment details successfully', 'payment' => $payment], 200);
         }
-
+    }
         return response()->json(['message' => 'User not found'], 200);
     }
 
@@ -548,8 +554,9 @@ class ServiceProviderController extends Controller
     public function AddCertificateHours(Request $request)
     {
         $data = $request->all();
-        if(!empty($request->id)){
         $updateCertificateHours=BusinessProfile::where('user_id',$request->id)->first();
+        if($updateCertificateHours){
+      
         if ($request->hasFile('insurance_certificate')) {
             $imagePath = public_path('uploads/' . $updateCertificateHours->insurance_certificate);
             if (!empty($updateCertificateHours->insurance_certificate) && file_exists($imagePath)) {
@@ -591,7 +598,7 @@ class ServiceProviderController extends Controller
         return response()->json(['message' => 'CertificateHour updated successfully', 'updateCertificateHours' => $updateCertificateHours], 200);
         }else{
             
-        
+          
         if ($request->hasFile('insurance_certificate')) {
             $photo1 = $request->file('insurance_certificate');
             $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
@@ -671,9 +678,10 @@ class ServiceProviderController extends Controller
     public function AddConversation(Request $request){
 
         $data=$request->all();
-        if(!empty($request->id)){
+        $conversation = BusinessProfile::where('user_id',$request->id)->first();
+        if($conversation){
         
-            $conversation = BusinessProfile::where('user_id',$request->id)->first();
+            
             $conversation->update($data);
             return response()->json(['message' => 'Conversation updated successfully', 'conversation' => $conversation], 200);
         
@@ -750,7 +758,7 @@ class ServiceProviderController extends Controller
 
     public function SocialDelete(Request $request){
 
-        $social=SocialProfile::find($request->id);
+        $social=SocialProfile::where('user_id',$request->id);
           
         if($request['facebook'] == $social->facebook){
 
@@ -792,10 +800,16 @@ class ServiceProviderController extends Controller
     public function AddBusinessLocation(Request $request){
 
         $data=$request->all();
+        $businesslocation=BusinessProfile::where('user_id',$request->id);
+        if($businesslocation){
+            
+            $businesslocation->update($data);
 
+            return response()->json(['message' => 'Service Location updated successfully', 'servicelocation' => $businesslocation], 200);
+        }else{
         $servicelocation = BusinessProfile::create($data);
         return response()->json(['message' => 'Service Location created successfully', 'servicelocation' => $servicelocation], 200);
-
+        }
 
     }
 

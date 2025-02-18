@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('business_secondary_categories')->nullable();
             $table->string('website')->nullable();
         
-            $table->text('about_video')->nullable();
+            $table->binary('about_video')->nullable();
             $table->text('technician_photo')->nullable();
             $table->text('vehicle_photo')->nullable();
             $table->text('facility_photo')->nullable();
@@ -42,6 +42,7 @@ return new class extends Migration
             $table->text('service_location')->nullable();
             $table->text('restrict_location')->nullable();
             $table->text('location_miles')->nullable();
+            $table->integer('publish')->nullable();
             $table->timestamps();
         });
     }

@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Hash;
 
 class SuperAdminController extends Controller
 {
+    public function SuperAdminDashboard(){
+
+
+        $GetNumberOfDeals=Deal::all()->count();
+        dd($GetNumberOfDeals);
+
+        
+    }
     public function ServiceProviders()
     {
         $serviceProviders = DB::table('users')
