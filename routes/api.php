@@ -14,6 +14,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('Register', 'Register')->name('Register');
     Route::post('UpdateUser', 'UpdateUser')->name('UpdateUser');
     Route::post('Userlogin', 'Userlogin')->name('Userlogin');
+    Route::get('googleLogin', 'googleLogin')->name('googleLogin');
+
+    
 });
 Route::middleware('auth:sanctum')->group(function () {
     
@@ -61,6 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('GetBusiness/{id}', 'GetBusiness')->name('GetBusiness');
 
         Route::get('OrdersList', 'OrdersList')->name('OrdersList');
+        
     });
 
     Route::prefix('Customer')->group(function () {
@@ -87,6 +91,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('SuperAdmin')->group(function () {
         Route::controller(SuperAdminController::class)->group(function () {
     
+            Route::get('SuperAdminDashboard', 'SuperAdminDashboard')->name('SuperAdminDashboard');
             Route::get('ServiceProviders', 'ServiceProviders')->name('ServiceProviders');
             Route::get('ProviderDetail/{user_id}', 'ProviderDetail')->name('ProviderDetail');
             Route::get('Customers', 'Customers')->name('Customers');
@@ -99,6 +104,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('UpdatePersonal', 'UpdatePersonal')->name('UpdatePersonal');
             Route::post('Security', 'Security')->name('Security');
             Route::post('NotificationSetting', 'NotificationSetting')->name('NotificationSetting');
+            
         });
     });
 
@@ -114,6 +120,3 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     
 });
-
-
-

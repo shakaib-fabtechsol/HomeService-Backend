@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 class AuthController extends Controller
 {
     public function Register(Request $request){
@@ -59,6 +60,12 @@ class AuthController extends Controller
             'token' => $token
         ];
 
+    }
+
+    public function googleLogin(){
+
+       return Socialite::driver('google')->stateless()->redirect();
+        
     }
 
 }
