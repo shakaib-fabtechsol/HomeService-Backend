@@ -555,7 +555,7 @@ class ServiceProviderController extends Controller
     public function AddCertificateHours(Request $request)
     {
         $data = $request->all();
-        $updateCertificateHours=BusinessProfile::where('user_id',$request->id)->first();
+        $updateCertificateHours=BusinessProfile::where('user_id',$request->user_id)->first();
         if($updateCertificateHours){
       
         if ($request->hasFile('insurance_certificate')) {
