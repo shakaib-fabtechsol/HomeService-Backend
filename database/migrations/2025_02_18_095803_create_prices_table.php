@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
+            $table->Integer('user_id');
             $table->bigInteger('call_pro');
             $table->bigInteger('text_pro');
             $table->bigInteger('instant_chat');
             $table->bigInteger('email_pro');
             $table->bigInteger('get_direction');
-            $table->bigInteger('referral_direction');
-            
+            $table->bigInteger('referral_commission');
+            $table->bigInteger('transection_fee');
             $table->timestamps();
         });
     }
