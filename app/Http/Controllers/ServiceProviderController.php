@@ -7,6 +7,7 @@ use App\Models\Deal;
 use App\Models\User;
 use App\Models\PaymentDetail;
 use App\Models\Hour;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\SocialProfile;
@@ -816,6 +817,18 @@ class ServiceProviderController extends Controller
 
         return response()->json(['getBusiness' => $getBusiness,'getSocial' => $getSocial], 200);
         
+    }
+
+    public function OrdersList(Request $request)
+    {
+        $userId = Auth::id();
+        $dealIds = Deal::where('user_id', $userId)->pluck('id')->toArray();
+        $orders = Order::whereIn('deal_id', $dealIds)->orderBy('id', 'desc')->get();
+        if ($orders) {
+            return response()->json(['message' => 'Orders List', 'orders' => $orders], 200);
+        } else {
+            return response()->json(['message' => 'No order available'], 200);
+        }
     }
     
 }
