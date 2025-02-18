@@ -59,6 +59,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('AddBusinessLocation', 'AddBusinessLocation')->name('AddBusinessLocation');
         Route::post('UpdateBusinessLocation', 'UpdateBusinessLocation')->name('UpdateBusinessLocation');
         Route::get('GetBusiness/{id}', 'GetBusiness')->name('GetBusiness');
+
+        Route::get('OrdersList', 'OrdersList')->name('OrdersList');
     });
 
     Route::prefix('Customer')->group(function () {
