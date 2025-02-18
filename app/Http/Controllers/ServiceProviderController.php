@@ -844,5 +844,17 @@ class ServiceProviderController extends Controller
             return response()->json(['message' => 'No order available'], 200);
         }
     }
+    public function SettingPublish($id){
+
+
+        $setting = BusinessProfile::where('user_id',$id)->first();
+        if ($setting) {
+            $setting->update(['publish'=>1]);
+        
+            return response()->json(['message' => 'Setting Publish successfully', 'setting' => $setting], 200);
+        } else {
+            return response()->json(['message' => 'No Setting found'], 200);
+        }
+    }
     
 }

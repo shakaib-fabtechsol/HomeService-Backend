@@ -66,6 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('GetBusiness/{id}', 'GetBusiness')->name('GetBusiness');
 
         Route::get('OrdersList', 'OrdersList')->name('OrdersList');
+        Route::get('SettingPublish/{id}', 'SettingPublish')->name('SettingPublish');
         
     });
 
