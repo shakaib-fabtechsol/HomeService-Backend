@@ -34,11 +34,6 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-    
-    // 'google' => [
-    //     'client_id' => '260784254605-u87burjqpb0kc1g4hhhhe4djpgse2ieq.apps.googleusercontent.com',
-    //     'client_secret' => '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',
-    //     'redirect' => 'http://127.0.0.1:8000',
-    // ],
+
     
 ];
