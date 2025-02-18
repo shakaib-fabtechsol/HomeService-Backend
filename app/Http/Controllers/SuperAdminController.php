@@ -15,8 +15,9 @@ class SuperAdminController extends Controller
 
 
         $GetNumberOfDeals=Deal::all()->count();
-       
-
+        $GetTotalServiceProvider=User::where('role',2)->count();
+        $GetTotalClient=User::where('role',1)->count();
+        dd($GetTotalClient);
         
     }
     public function ServiceProviders()
@@ -190,5 +191,5 @@ class SuperAdminController extends Controller
         } else {
             return response()->json(['message' => 'No user found'], 200);
         }
-    }   
+    }  
 }
