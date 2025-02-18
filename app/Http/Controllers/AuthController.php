@@ -68,4 +68,15 @@ class AuthController extends Controller
         
     }
 
+    public function googleHandle(){
+
+        try{
+            $user=Socialite::driver('google')->stateless()->user();
+            dd($user);
+        }catch(Exception $e){
+
+            dd($e->getMessage());
+        }
+    }
+
 }

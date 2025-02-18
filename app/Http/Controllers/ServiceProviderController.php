@@ -759,8 +759,8 @@ class ServiceProviderController extends Controller
 
     public function SocialDelete(Request $request){
 
-        $social=SocialProfile::where('user_id',$request->id);
-          
+        $social=SocialProfile::where('user_id',$request->id)->first();
+       
         if($request['facebook'] == $social->facebook){
 
             $social->update(['facebook'=> null]);
