@@ -15,7 +15,7 @@ class SuperAdminController extends Controller
 
 
         $GetNumberOfDeals=Deal::all()->count();
-        dd($GetNumberOfDeals);
+       
 
         
     }

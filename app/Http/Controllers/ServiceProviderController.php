@@ -404,7 +404,7 @@ class ServiceProviderController extends Controller
     public function AddPaymentDetails(Request $request)
     {
         $data = $request->all();
-        $payment = PaymentDetail::find($request->id);
+        $payment = PaymentDetail::where('user_id',$request->id)->first();
         if($payment){
            
          $payment->update($data);
