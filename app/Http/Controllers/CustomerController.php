@@ -6,6 +6,7 @@ use App\Models\BusinessProfile;
 use App\Models\Deal;
 use App\Models\Order;
 use App\Models\PaymentMethod;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -226,6 +227,51 @@ class CustomerController extends Controller
             return response()->json(['message' => 'Order Detail', 'order' => $order], 200);
         } else {
             return response()->json(['message' => 'No order available'], 200);
+        }
+    }
+
+    public function UploadReview(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if ($user) {
+            $data = $request->all();
+            $review = Review::create($data);
+            return response()->json(['message' => 'Added Review successfully', 'user' => $user, 'review' => $review], 200);
+        } else {
+            return response()->json(['message' => 'No user login'], 200);
+        }
+    }
+
+    public function UpdateReview(Request $request)
+    {
+        $review = Review::find($request->id);
+        if ($review) {
+            $data = $request->all();
+            $review->update($data);
+            return response()->json(['message' => 'Review updated successfully', 'review' => $review], 200);
+        } else {
+            return response()->json(['message' => 'No review found'], 200);
+        }
+    }
+
+    public function DeleteReview($id)
+    {
+        $review = Review::find($id);    
+        if ($review) {
+            $review->delete();
+            return response()->json(['message' => 'Review delete successfully','review' => $review], 200);
+        } else {
+            return response()->json(['message' => 'No review found'], 200);
+        }
+    }
+
+    public function FilterService(Request $request)
+    {
+        $services = Deal::where('service_category', $request->service)->get();    
+        if ($services) {
+            return response()->json(['message' => 'Services List','services' => $services], 200);
+        } else {
+            return response()->json(['message' => 'No service available'], 200);
         }
     }
 }
