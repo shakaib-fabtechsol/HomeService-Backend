@@ -98,4 +98,43 @@ class AuthController extends Controller
         }
     }
 
+    public function facebookLogin(){
+
+        return Socialite::driver('facebook')->stateless()->redirect();
+
+        
+    }
+    
+    public function facebookHandle(){
+
+        try{
+            $user=Socialite::driver('facebook')->stateless()->user();
+            dd($user);
+           $findUser=User::where('email',$user->email)->first();
+           if(!$findUser){
+            
+            $createUser=new User();
+           
+                $createUser->name = $user->name;
+                $createUser->email = $user->email;
+                $createUser->role = 1;
+                $createUser->password = Hash::make('aszx1234');
+                $createUser->terms = 1;
+                $createUser->save();
+
+           
+            
+            return [
+
+                'createUser'=>$createUser,
+         
+            ];
+           }
+        }catch(Exception $e){
+
+            dd($e->getMessage());
+        }
+        
+    }
+
 }
