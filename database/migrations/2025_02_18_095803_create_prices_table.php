@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
             $table->Integer('user_id');
-            $table->bigInteger('call_pro');
-            $table->bigInteger('text_pro');
-            $table->bigInteger('instant_chat');
-            $table->bigInteger('email_pro');
-            $table->bigInteger('get_direction');
-            $table->bigInteger('referral_commission');
-            $table->bigInteger('transection_fee');
+            $table->bigInteger('call_pro')->nullable();
+            $table->bigInteger('text_pro')->nullable();
+            $table->bigInteger('instant_chat')->nullable();
+            $table->bigInteger('email_pro')->nullable();
+            $table->bigInteger('get_direction')->nullable();
+            $table->bigInteger('referral_commission')->nullable();
+            $table->bigInteger('transection_fee')->nullable();
+            $table->bigInteger('customer_service_fee')->nullable();
+            $table->bigInteger('provider_service_fee')->nullable();
             $table->timestamps();
         });
     }
