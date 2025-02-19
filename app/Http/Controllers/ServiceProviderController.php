@@ -856,5 +856,13 @@ class ServiceProviderController extends Controller
             return response()->json(['message' => 'No Setting found'], 200);
         }
     }
+
+    public function GetDealsByCategory(Request $request){
+
+        $getDeals=Deal::where('service_category','=',$request->category)->where('user_id', $request->user_id)->get();
+
+        return response()->json(['getDeals' => $getDeals], 200);
+        
+    }
     
 }

@@ -16,7 +16,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('Userlogin', 'Userlogin')->name('Userlogin');
     Route::get('googleLogin', 'googleLogin')->name('googleLogin');
     Route::get('auth/google/callback', 'googleHandle');
-    
+    Route::get('facebookLogin', 'facebookLogin')->name('facebookLogin');
+    Route::get('auth/facebook/callback', 'facebookHandle');
+
 
     
 });
@@ -67,6 +69,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('OrdersList', 'OrdersList')->name('OrdersList');
         Route::get('SettingPublish/{id}', 'SettingPublish')->name('SettingPublish');
+        Route::post('GetDealsByCategory', 'GetDealsByCategory')->name('GetDealsByCategory');
+
         
     });
 
