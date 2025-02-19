@@ -70,6 +70,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('OrdersList', 'OrdersList')->name('OrdersList');
         Route::get('SettingPublish/{id}', 'SettingPublish')->name('SettingPublish');
         Route::post('GetDealsByCategory', 'GetDealsByCategory')->name('GetDealsByCategory');
+        Route::post('OrderBeforeImages', 'OrderBeforeImages')->name('OrderBeforeImages');
+        
 
         Route::post('OrdeAfterImages', 'OrdeAfterImages')->name('OrdeAfterImages');
     });

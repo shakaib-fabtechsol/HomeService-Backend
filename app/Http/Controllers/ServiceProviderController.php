@@ -802,13 +802,15 @@ class ServiceProviderController extends Controller
     public function AddBusinessLocation(Request $request){
 
         $data=$request->all();
-        $businesslocation=BusinessProfile::where('user_id',$request->user_id);
+        $businesslocation=BusinessProfile::where('user_id',$request->user_id)->first();
         if($businesslocation){
-            
-            $businesslocation->update($data);
-
+          
+            $updatedbusinesslocation =$businesslocation->update($data);
+                
             return response()->json(['message' => 'Service Area updated successfully', 'servicelocation' => $businesslocation], 200);
+            
         }else{
+           
         $servicelocation = BusinessProfile::create($data);
         return response()->json(['message' => 'Service Area created successfully', 'servicelocation' => $servicelocation], 200);
         }
@@ -888,7 +890,28 @@ class ServiceProviderController extends Controller
         } else {
             return response()->json(['message' => 'No order found'], 200);
         }
+    }
+    public function OrderBeforeImages(Request $request){
+        $imageNames = [];
+
+        if ($request->hasFile('before_image')) {
+            foreach ($request->file('before_image') as $beforeImage) {
+                $photo_name1 = time() . '-' . $beforeImage->getClientOriginalName();
+                $photo_destination = public_path('uploads');
+                $beforeImage->move($photo_destination, $photo_name1);
         
+                $imageNames[] = $photo_name1; 
+            }
+        }
+        
+      
+        $data['type'] = 'before';
+        $data['before_image'] = json_encode($imageNames);
+        
+        $BeforeDeliveryImage = DeliveryImage::create($data);
+        
+        return response()->json(['message' => 'Before Delivery Image created successfully', 'BeforeDeliveryImage' => $BeforeDeliveryImage]);
+
     }
     
 }
