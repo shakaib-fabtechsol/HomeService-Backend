@@ -801,15 +801,15 @@ class ServiceProviderController extends Controller
     public function AddBusinessLocation(Request $request){
 
         $data=$request->all();
-        $businesslocation=BusinessProfile::where('user_id',$request->id);
+        $businesslocation=BusinessProfile::where('user_id',$request->user_id);
         if($businesslocation){
             
             $businesslocation->update($data);
 
-            return response()->json(['message' => 'Service Location updated successfully', 'servicelocation' => $businesslocation], 200);
+            return response()->json(['message' => 'Service Area updated successfully', 'servicelocation' => $businesslocation], 200);
         }else{
         $servicelocation = BusinessProfile::create($data);
-        return response()->json(['message' => 'Service Location created successfully', 'servicelocation' => $servicelocation], 200);
+        return response()->json(['message' => 'Service Area created successfully', 'servicelocation' => $servicelocation], 200);
         }
 
     }
