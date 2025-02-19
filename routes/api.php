@@ -73,7 +73,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('OrderBeforeImages', 'OrderBeforeImages')->name('OrderBeforeImages');
         
 
-        
+        Route::post('OrdeAfterImages', 'OrdeAfterImages')->name('OrdeAfterImages');
     });
 
     Route::prefix('Customer')->group(function () {

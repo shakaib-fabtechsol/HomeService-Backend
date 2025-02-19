@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BusinessProfile;
 use App\Models\Deal;
+use App\Models\DeliveryImage;
 use App\Models\User;
 use App\Models\PaymentDetail;
 use App\Models\Hour;
@@ -867,6 +868,29 @@ class ServiceProviderController extends Controller
         
     }
 
+    public function OrdeAfterImages(Request $request){
+
+        $order = Order::find($request->order_id);
+        if ($order) {
+            $data = $request->all();
+            if ($request->hasFile('images')) {
+                foreach($request->file('images') as $image){
+                    $photo1 = $image;
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $images[] = $photo_name1;
+                }
+            }
+
+            $data['images'] =  json_encode($images);
+            $data['type'] =  'after';
+            $afterImages = DeliveryImage::create($data);
+            return response()->json(['message' => 'Added after delivey images successfully', 'afterImages' => $afterImages], 200);
+        } else {
+            return response()->json(['message' => 'No order found'], 200);
+        }
+    }
     public function OrderBeforeImages(Request $request){
         $imageNames = [];
 
@@ -887,8 +911,7 @@ class ServiceProviderController extends Controller
         $BeforeDeliveryImage = DeliveryImage::create($data);
         
         return response()->json(['message' => 'Before Delivery Image created successfully', 'BeforeDeliveryImage' => $BeforeDeliveryImage]);
-        
-        
+
     }
     
 }
