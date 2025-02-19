@@ -71,7 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('SettingPublish/{id}', 'SettingPublish')->name('SettingPublish');
         Route::post('GetDealsByCategory', 'GetDealsByCategory')->name('GetDealsByCategory');
 
-        
+        Route::post('OrdeAfterImages', 'OrdeAfterImages')->name('OrdeAfterImages');
     });
 
     Route::prefix('Customer')->group(function () {
