@@ -70,10 +70,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('OrdersList', 'OrdersList')->name('OrdersList');
         Route::get('SettingPublish/{id}', 'SettingPublish')->name('SettingPublish');
         Route::post('GetDealsByCategory', 'GetDealsByCategory')->name('GetDealsByCategory');
-        Route::post('OrderBeforeImages', 'OrderBeforeImages')->name('OrderBeforeImages');
         
-
+        Route::post('OrderBeforeImages', 'OrderBeforeImages')->name('OrderBeforeImages');
+        Route::post('OrderConfirmImages', 'OrderConfirmImages')->name('OrderConfirmImages');
         Route::post('OrdeAfterImages', 'OrdeAfterImages')->name('OrdeAfterImages');
+
+        Route::post('CreateOffer', 'CreateOffer')->name('CreateOffer');
+        
+        
     });
 
     Route::prefix('Customer')->group(function () {
@@ -130,6 +134,14 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('Dashboard', 'Dashboard')->name('Dashboard');
             Route::post('SalesPersonal', 'SalesPersonal')->name('SalesPersonal');
             Route::post('SalesSecurity', 'SalesSecurity')->name('SalesSecurity');
+            Route::post('AddTask', 'AddTask')->name('AddTask');
+            Route::get('FetchAllTask', 'FetchAllTask')->name('FetchAllTask');
+            Route::get('ViewTask/{id}', 'ViewTask')->name('ViewTask');
+            Route::post('UpdateTask', 'UpdateTask')->name('UpdateTask');
+            Route::get('DeleteTask/{id}', 'DeleteTask')->name('DeleteTask');
+
+            
+
           
         });
     });
