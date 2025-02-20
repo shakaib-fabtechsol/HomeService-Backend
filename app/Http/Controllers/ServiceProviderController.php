@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\PaymentDetail;
 use App\Models\Hour;
 use App\Models\Order;
+use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\SocialProfile;
@@ -804,7 +805,18 @@ class ServiceProviderController extends Controller
         $data=$request->all();
         $businesslocation=BusinessProfile::where('user_id',$request->user_id)->first();
         if($businesslocation){
-          
+          if($request->service_location_type == 'location'){
+
+
+            $data['location_miles']=null;
+            
+          }
+          if($request->service_location_type == 'radius'){
+            $data['business_location']=null;
+            $data['restrict_location']=null;
+
+            
+          }
             $updatedbusinesslocation =$businesslocation->update($data);
                 
             return response()->json(['message' => 'Service Area updated successfully', 'servicelocation' => $businesslocation], 200);
@@ -906,7 +918,7 @@ class ServiceProviderController extends Controller
         
       
         $data['type'] = 'before';
-        $data['before_image'] = json_encode($imageNames);
+        $data['images'] = json_encode($imageNames);
         
         $BeforeDeliveryImage = DeliveryImage::create($data);
         
@@ -914,4 +926,37 @@ class ServiceProviderController extends Controller
 
     }
     
+    public function OrderConfirmImages(Request $request){
+
+        $imageNames = [];
+
+        if ($request->hasFile('confirm_image')) {
+            foreach ($request->file('confirm_image') as $beforeImage) {
+                $photo_name1 = time() . '-' . $beforeImage->getClientOriginalName();
+                $photo_destination = public_path('uploads');
+                $beforeImage->move($photo_destination, $photo_name1);
+        
+                $imageNames[] = $photo_name1; 
+            }
+        }
+        
+      
+        $data['type'] = 'confirm';
+        $data['images'] = json_encode($imageNames);
+        
+        $BeforeDeliveryImage = DeliveryImage::create($data);
+        
+        return response()->json(['message' => 'Before Delivery Image created successfully', 'BeforeDeliveryImage' => $BeforeDeliveryImage]);
+        
+    }
+
+    public function CreateOffer(Request $request){
+
+        $data=$request->all();
+        
+        $Offer = Offer::create($data);
+
+        return response()->json(['message' => 'Offer created successfully', 'Offer' => $Offer]);
+        
+    }
 }
