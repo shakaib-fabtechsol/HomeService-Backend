@@ -143,7 +143,7 @@ class SaleRapController extends Controller
         if (!empty($task->files) && file_exists($imagePath)) {
             unlink($imagePath);
         }
-
+        $task->delete();
         return response()->json(['message' => 'Task deleted successfully', 'task' => $task], 200);  
     }
 
