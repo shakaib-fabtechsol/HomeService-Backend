@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BusinessProfile;
 use App\Models\Deal;
+use App\Models\DeliveryImage;
 use App\Models\Order;
 use App\Models\PaymentMethod;
 use App\Models\Review;
@@ -272,6 +273,30 @@ class CustomerController extends Controller
             return response()->json(['message' => 'Services List','services' => $services], 200);
         } else {
             return response()->json(['message' => 'No service available'], 200);
+        }
+    }
+
+    public function AskForRevison(Request $request){
+
+        $order = Order::find($request->order_id);
+        if ($order) {
+            $data = $request->all();
+            if ($request->hasFile('images')) {
+                foreach($request->file('images') as $image){
+                    $photo1 = $image;
+                    $photo_name1 = time() . '-' . $photo1->getClientOriginalName();
+                    $photo_destination = public_path('uploads');
+                    $photo1->move($photo_destination, $photo_name1);
+                    $images[] = $photo_name1;
+                }
+            }
+        
+            $data['images'] =  json_encode($images);
+            $data['type'] =  'revision';
+            $afterImages = DeliveryImage::create($data);
+            return response()->json(['message' => 'Added after delivey images successfully', 'afterImages' => $afterImages], 200);
+        } else {
+            return response()->json(['message' => 'No order found'], 200);
         }
     }
 }

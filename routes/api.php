@@ -104,6 +104,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('DeleteReview/{id}', 'DeleteReview')->name('DeleteReview');
 
             Route::post('FilterService', 'FilterService')->name('FilterService');
+
+            Route::post('AskForRevison', 'AskForRevison')->name('AskForRevison');
         });
     });
 
