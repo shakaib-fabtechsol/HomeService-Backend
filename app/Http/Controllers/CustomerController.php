@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BusinessProfile;
 use App\Models\Deal;
 use App\Models\DeliveryImage;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\PaymentMethod;
 use App\Models\Review;
@@ -33,6 +34,14 @@ class CustomerController extends Controller
                 $data['personal_image'] = $photo_name1;
             }
             $user->update($data);
+            $notification = [
+                'title' => 'Profile Updated',
+                'message' => 'Profile has been updated successfully',
+                'created_by' => $user->id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'User Personal details updated successfully', 'user' => $user], 200);
         } else {
             return response()->json(['message' => 'No user found'], 200);
@@ -48,6 +57,14 @@ class CustomerController extends Controller
             }
             $user->password = Hash::make($request->password);
             $user->save();
+            $notification = [
+                'title' => 'Password Updated',
+                'message' => 'Password has been updated successfully',
+                'created_by' => $user->id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'User Password Updated successfully', 'user' => $user], 200);
         } else {
             return response()->json(['message' => 'No user found'], 200);
@@ -60,6 +77,14 @@ class CustomerController extends Controller
         if ($user) {
             $data = $request->all();
             $paymentMethod = PaymentMethod::create($data);
+            $notification = [
+                'title' => 'Payment Method Added',  
+                'message' => 'New Payment Method has been Added successfully',
+                'created_by' => $user->id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'Added New Payment Method successfully', 'user' => $user, 'Payment Method' => $paymentMethod], 200);
         } else {
             return response()->json(['message' => 'No user found'], 200);
@@ -70,6 +95,14 @@ class CustomerController extends Controller
         $paymentMethod = PaymentMethod::find($id);
         if($paymentMethod){
             $paymentMethod->delete();
+            $notification = [
+                'title' => 'Payment Method Deleted',  
+                'message' => 'Payment Method has been deleted successfully',
+                'created_by' => $paymentMethod->user_id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'Payment Method deleted successfully', 'PaymentMethod' => $paymentMethod], 200);
         } else {
             return response()->json(['message' => 'No Payment Method found'], 200);
@@ -81,6 +114,14 @@ class CustomerController extends Controller
         if($paymentMethod){
             $data = $request->all();
             $paymentMethod->update($data);
+            $notification = [
+                'title' => 'Payment Method Updated',  
+                'message' => 'Payment Method has been updated successfully',
+                'created_by' => $paymentMethod->user_id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'Payment Method Updated successfully', 'PaymentMethod' => $paymentMethod], 200);
         } else {
             return response()->json(['message' => 'No Payment Method found'], 200);
@@ -113,10 +154,26 @@ class CustomerController extends Controller
             $social = SocialProfile::where('user_id', $user->id)->first();
             $data = $request->all();
             if ($social) {
+                $notification = [
+                    'title' => 'Social Profile Updated',  
+                    'message' => 'Social Profile has been updated successfully',
+                    'created_by' => $social->user_id,
+                    'status' => 0,
+                    'clear' => 'no',
+                ];
+                Notification::create($notification);
                 $social->update($data);
                 return response()->json(['message' => 'Social Added successfully', 'user' => $user, 'Social' => $social], 200);
             } else {
                 $social = SocialProfile::create($data);
+                $notification = [
+                    'title' => 'Social Profile Created',  
+                    'message' => 'Social Profile has been created successfully',
+                    'created_by' => $social->user_id,
+                    'status' => 0,
+                    'clear' => 'no',
+                ];
+                Notification::create($notification);
             }
             return response()->json(['message' => 'Added Social successfully', 'user' => $user, 'Social' => $social], 200);
         } else {
@@ -158,9 +215,18 @@ class CustomerController extends Controller
             $social->update(['google_business'=> null]);
 
         }
+
         if ($social && is_null($social->facebook) && is_null($social->twitter) && is_null($social->instagram) && is_null($social->linkedin) && is_null($social->youtube) && is_null($social->google_business)) {
             $social->delete();
         }
+        $notification = [
+            'title' => 'Delete Social Link',  
+            'message' => 'Social link has been deleted successfully',
+            'created_by' => $social->user_id,
+            'status' => 0,
+            'clear' => 'no',
+        ];
+        Notification::create($notification);
         return response()->json(['social' => $social], 200);
 
 
@@ -192,6 +258,14 @@ class CustomerController extends Controller
         if ($user) {
             $data = $request->all();
             $order = Order::create($data);
+            $notification = [
+                'title' => 'Added New Order',  
+                'message' => 'New Order has been added successfully',
+                'created_by' => $user->user_id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'Added Order successfully', 'user' => $user, 'order' => $order], 200);
         } else {
             return response()->json(['message' => 'No user found'], 200);
@@ -204,6 +278,14 @@ class CustomerController extends Controller
         if ($order) {
             $data = $request->all();
             $order->update($data);
+            $notification = [
+                'title' => 'Added New Order',  
+                'message' => 'New Order has been added successfully',
+                'created_by' => $order->customer_id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'Updated Order successfully', 'order' => $order], 200);
         } else {
             return response()->json(['message' => 'No order found'], 200);
@@ -237,6 +319,14 @@ class CustomerController extends Controller
         if ($user) {
             $data = $request->all();
             $review = Review::create($data);
+            $notification = [
+                'title' => 'Added Review',  
+                'message' => 'A new review has been added successfully',
+                'created_by' => $review->user_id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'Added Review successfully', 'user' => $user, 'review' => $review], 200);
         } else {
             return response()->json(['message' => 'No user login'], 200);
@@ -249,6 +339,14 @@ class CustomerController extends Controller
         if ($review) {
             $data = $request->all();
             $review->update($data);
+            $notification = [
+                'title' => 'Review Update',  
+                'message' => 'Review has been updated successfully',
+                'created_by' => $review->user_id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'Review updated successfully', 'review' => $review], 200);
         } else {
             return response()->json(['message' => 'No review found'], 200);
@@ -260,6 +358,14 @@ class CustomerController extends Controller
         $review = Review::find($id);    
         if ($review) {
             $review->delete();
+            $notification = [
+                'title' => 'Review Delete',  
+                'message' => 'Review has been deleted successfully',
+                'created_by' => $review->user_id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
             return response()->json(['message' => 'Review delete successfully','review' => $review], 200);
         } else {
             return response()->json(['message' => 'No review found'], 200);
@@ -294,7 +400,15 @@ class CustomerController extends Controller
             $data['images'] =  json_encode($images);
             $data['type'] =  'revision';
             $afterImages = DeliveryImage::create($data);
-            return response()->json(['message' => 'Added after delivey images successfully', 'afterImages' => $afterImages], 200);
+            $notification = [
+                'title' => 'Revision Request',  
+                'message' => 'Revision request has been added successfully',
+                'created_by' => $order->customer_id,
+                'status' => 0,
+                'clear' => 'no',
+            ];
+            Notification::create($notification);
+            return response()->json(['message' => 'Added revision successfully', 'afterImages' => $afterImages], 200);
         } else {
             return response()->json(['message' => 'No order found'], 200);
         }
