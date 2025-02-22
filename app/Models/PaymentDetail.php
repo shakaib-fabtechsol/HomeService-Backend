@@ -13,8 +13,6 @@ class PaymentDetail extends Model
         'branch_name',
         'account_number',
         'bank_routing_number',
-
-
-
+        'location',
     ];
 }
