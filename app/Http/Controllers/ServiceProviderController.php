@@ -45,15 +45,6 @@ class ServiceProviderController extends Controller
         if ($deal) {
             $deal->update(['publish'=>1]);
             $deal = Deal::find($id);
-            $notifications = [
-                'title' => 'Deal Publish',
-                'message' => '"' . $deal->service_title . '" Deal Publish successfully',
-                'created_by' => $deal->user_id,
-                'status' => 0,
-                'clear' => 'no',
-
-            ];
-            Notification::create($notifications);
             return response()->json(['message' => 'Deal Publish successfully', 'deal' => $deal], 200);
         } else {
             return response()->json(['message' => 'No deals found'], 200);
@@ -78,15 +69,7 @@ class ServiceProviderController extends Controller
                     $data['residential'] = null;
                 }
                 $deal->update($data);
-                $notifications = [
-                    'title' => 'Update Deal',
-                    'message' => '"' . $deal->service_title . '" Deal updated successfully',
-                    'created_by' => $deal->user_id,
-                    'status' => 0,
-                    'clear' => 'no',
-
-                ];
-                Notification::create($notifications);
+                
                 return response()->json(['message' => 'Deal updated successfully', 'deal' => $deal], 200);
             } else {
                 return response()->json(['message' => 'No deals found'], 200);
@@ -96,15 +79,6 @@ class ServiceProviderController extends Controller
             $data['user_id'] = $userId;
             $data['publish'] = 0;
             $deal = Deal::create($data);
-            $notifications = [
-                'title' => 'Added new deal',
-                'message' => '"' . $deal->service_title . '" Added new deal successfully',
-                'created_by' => $request->user_id,
-                'status' => 0,
-                'clear' => 'no',
-
-            ];
-            Notification::create($notifications);
             return response()->json(['message' => 'Added new deal successfully', 'deal' => $deal], 200);
         }
     }
@@ -175,15 +149,7 @@ class ServiceProviderController extends Controller
                     $data['hourly_estimated_service_time'] = null;
                 }
                 $deal->update($data);
-                $notifications = [
-                    'title' => 'Update Package',
-                    'message' => '"' . $deal->pricing_model . '" Package deal updated successfully',
-                    'created_by' => $deal->user_id,
-                    'status' => 0,
-                    'clear' => 'no',
-
-                ];
-                Notification::create($notifications);
+                
                 return response()->json(['message' => 'Package deal updated successfully', 'deal' => $deal], 200);
             } else {
                 return response()->json(['message' => 'No deals found'], 200);
@@ -193,15 +159,6 @@ class ServiceProviderController extends Controller
             $data['user_id'] = $userId;
             $data['publish'] = 0;
             $deal = Deal::create($data);
-            $notifications = [
-                'title' => 'Added Package',
-                'message' => '"' . $deal->pricing_model . '" Added new package deal successfully',
-                'created_by' => $deal->user_id,
-                'status' => 0,
-                'clear' => 'no',
-
-            ];
-            Notification::create($notifications);
             return response()->json(['message' => 'Added new package deal successfully', 'deal' => $deal], 200);
         }
     }
@@ -224,15 +181,6 @@ class ServiceProviderController extends Controller
                     $data['image'] = $photo_name1;
                     $data['id'] = $request->id;
                     $deal->update($data);
-                    $notifications = [
-                        'title' => 'Update Image',
-                        'message' => 'Image updated successfully',
-                        'created_by' => $deal->user_id,
-                        'status' => 0,
-                        'clear' => 'no',
-    
-                    ];
-                    Notification::create($notifications);
                 }
                 return response()->json(['message' => 'Image updated successfully', 'deal' => $deal], 200);
             } else {
@@ -250,15 +198,6 @@ class ServiceProviderController extends Controller
                 $userId = Auth::id();
                 $data['user_id'] = $userId;
                 $deal = Deal::create($data);
-                $notifications = [
-                    'title' => 'Added Image',
-                    'message' => 'Added Image successfully',
-                    'created_by' => $deal->user_id,
-                    'status' => 0,
-                    'clear' => 'no',
-
-                ];
-                Notification::create($notifications);
                 return response()->json(['message' => 'Added new deal with Image successfully', 'deal' => $deal], 200);
             } else {
                 return response()->json(['message' => 'image field required'], 422);
@@ -387,15 +326,6 @@ class ServiceProviderController extends Controller
                 unlink($imagePath);
             }
             $deal->delete();
-            $notifications = [
-                'title' => 'Delete Deal',
-                'message' => '"' . $deal->service_title . '" Deal deleted successfully',
-                'created_by' => $deal->user_id,
-                'status' => 0,
-                'clear' => 'no',
-
-            ];
-            Notification::create($notifications);
             return response()->json(['message' => 'Deal deleted successfully', 'deal' => $deal], 200);
         } else {
             return response()->json(['message' => 'No deal found'], 200);
@@ -419,15 +349,6 @@ class ServiceProviderController extends Controller
                 $data['personal_image'] = $photo_name1;
             }
             $user->update($data);
-            $notifications = [
-                'title' => 'Update User Details',
-                'message' => 'User Personal details updated successfully',
-                'created_by' => $user->id,
-                'status' => 0,
-                'clear' => 'no',
-
-            ];
-            Notification::create($notifications);
             return response()->json(['message' => 'User Personal details updated successfully', 'user' => $user], 200);
         } else {
             return response()->json(['message' => 'No user found'], 200);
@@ -443,15 +364,6 @@ class ServiceProviderController extends Controller
             }
             $user->password = Hash::make($request->password);
             $user->save();
-            $notifications = [
-                'title' => 'Update User Password',
-                'message' => 'User Password Updated successfully',
-                'created_by' => $user->id,
-                'status' => 0,
-                'clear' => 'no',
-
-            ];
-            Notification::create($notifications);
             return response()->json(['message' => 'User Password Updated successfully', 'user' => $user], 200);
         } else {
             return response()->json(['message' => 'No user found'], 200);
@@ -479,15 +391,6 @@ class ServiceProviderController extends Controller
                     
                 }
                 $businessProfile->update($data);
-                $notifications = [
-                    'title' => 'Update User Business Profile',
-                    'message' => 'User Business Profile Updated successfully',
-                    'created_by' => $businessProfile->user_id,
-                    'status' => 0,
-                    'clear' => 'no',
-    
-                ];
-                Notification::create($notifications);
                 return response()->json(['message' => 'User Business Profile Updated successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
             } else {
                 if ($request->hasFile('business_logo')) {
@@ -499,15 +402,6 @@ class ServiceProviderController extends Controller
                 }
                 $businessProfile = BusinessProfile::create($data);
 
-                $notifications = [
-                    'title' => 'Created User Business Profile',
-                    'message' => 'User Business Profile created successfully',
-                    'created_by' => $request->user_id,
-                    'status' => 0,
-                    'clear' => 'no',
-    
-                ];
-                Notification::create($notifications);
             }
 
             return response()->json(['message' => 'User Business Profile created successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
@@ -522,29 +416,11 @@ class ServiceProviderController extends Controller
         if($payment){
            
          $payment->update($data);
-         $notifications = [
-            'title' => 'update Payment details',
-            'message' => 'Updated Payment details successfully',
-            'created_by' => $payment->user_id,
-            'status' => 0,
-            'clear' => 'no',
-
-        ];
-        Notification::create($notifications);
         return response()->json(['message' => 'Updated Payment details successfully', 'payment' => $payment], 200);
         }else{
         if (isset($request->user_id)) {
             $data['user_id'] = $request->user_id;
             $payment = PaymentDetail::create($data);
-            $notifications = [
-                'title' => 'Create Payment details',
-                'message' => 'Added Payment details successfully',
-                'created_by' => $request->user_id,
-                'status' => 0,
-                'clear' => 'no',
-    
-            ];
-            Notification::create($notifications);
             return response()->json(['message' => 'Added Payment details successfully', 'payment' => $payment], 200);
         }
     }
@@ -637,15 +513,6 @@ class ServiceProviderController extends Controller
                     $user->update($data);
                 }
                 $businessProfile->update($data);
-                $notifications = [
-                'title' => 'Update User Business Additional Info',
-                'message' => 'User Business Additional Info Updated successfully',
-                'created_by' => $businessProfile->user_id,
-                'status' => 0,
-                'clear' => 'no',
-    
-            ];
-            Notification::create($notifications);
                 return response()->json(['message' => 'User Business Additional Info Updated successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
             } else {
                 if ($request->hasFile('technician_photo')) {
@@ -684,15 +551,7 @@ class ServiceProviderController extends Controller
                     $data['project_photo'] = $photo_name1;
                 }
                 $businessProfile = BusinessProfile::create($data);
-                $notifications = [
-                    'title' => 'Created User Business Additional Info',
-                    'message' => 'User Business Additional Info created successfully',
-                    'created_by' => $request->user_id,
-                    'status' => 0,
-                    'clear' => 'no',
-        
-                ];
-                Notification::create($notifications);
+                
             }
 
             return response()->json(['message' => 'User Business Additional Info created successfully', 'user' => $user, 'BusinessProfile' => $businessProfile], 200);
@@ -744,16 +603,6 @@ class ServiceProviderController extends Controller
             
         }
         $updateCertificateHours->update($data);
-
-        $notifications = [
-            'title' => 'Update Business CertificateHour',
-            'message' => 'Business CertificateHour updated successfully',
-            'created_by' => $updateCertificateHours->user_id,
-            'status' => 0,
-            'clear' => 'no',
-
-        ];
-        Notification::create($notifications);
         return response()->json(['message' => 'Business CertificateHour updated successfully', 'updateCertificateHours' => $updateCertificateHours], 200);
         }else{
             
@@ -783,15 +632,7 @@ class ServiceProviderController extends Controller
        
 
             $certificate = BusinessProfile::create($data);
-            $notifications = [
-                'title' => 'Business CertificateHour ',
-                'message' => 'Business CertificateHour created successfully',
-                'created_by' => $request->user_id,
-                'status' => 0,
-                'clear' => 'no',
-    
-            ];
-            Notification::create($notifications);
+          
         
         return response()->json(['message' => 'Business CertificateHour created successfully', 'certificate' => $certificate], 200);
     }
@@ -850,29 +691,13 @@ class ServiceProviderController extends Controller
         
             
             $conversation->update($data);
-            $notifications = [
-                'title' => 'Updated Conversation Details',
-                'message' => 'Conversation Details updated successfully',
-                'created_by' => $conversation->user_id,
-                'status' => 0,
-                'clear' => 'no',
-    
-            ];
-            Notification::create($notifications);
+            
             return response()->json(['message' => 'Conversation Details updated successfully', 'conversation' => $conversation], 200);
         
         }else{
 
             $conversation = BusinessProfile::create($data);
-            $notifications = [
-                'title' => 'Created Conversation Details',
-                'message' => 'Conversation Details created successfully',
-                'created_by' => $request->id,
-                'status' => 0,
-                'clear' => 'no',
-    
-            ];
-            Notification::create($notifications);
+           
             return response()->json(['message' => 'Conversation Details created successfully', 'conversation' => $conversation], 200);
 
         }
@@ -920,27 +745,11 @@ class ServiceProviderController extends Controller
         if ($social) {
             $social->update($data);
             $certificate = BusinessProfile::create($data);
-            $notifications = [
-                'title' => 'Updated Social Link',
-                'message' => 'Social Link updated successfully',
-                'created_by' => $social->user_id,
-                'status' => 0,
-                'clear' => 'no',
-    
-            ];
-            Notification::create($notifications);
+         
             return response()->json(['message' => 'Social Link updated successfully', 'user' => $user, 'Social' => $social], 200);
         } else {
             $social = SocialProfile::create($data);
-            $notifications = [
-                'title' => 'Added Social Link',
-                'message' => 'Social Link added successfully',
-                'created_by' => $request->user_id,
-                'status' => 0,
-                'clear' => 'no',
-    
-            ];
-            Notification::create($notifications);
+          
             return response()->json(['message' => 'Social Link added successfully', 'user' => $user, 'Social' => $social], 200);
         }
     }
@@ -1003,15 +812,7 @@ class ServiceProviderController extends Controller
 
             
         }
-        $notifications = [
-            'title' => 'Delete Social Link',
-            'message' => 'Socials Link deleted successfully',
-            'created_by' => $social->user_id,
-            'status' => 0,
-            'clear' => 'no',
-
-        ];
-        Notification::create($notifications);
+       
         return response()->json(['social' => $social], 200);
 
 
@@ -1034,29 +835,13 @@ class ServiceProviderController extends Controller
             
           }
             $updatedbusinesslocation =$businesslocation->update($data);
-            $notifications = [
-                'title' => 'Update Service Area',
-                'message' => 'Service Area updated successfully',
-                'created_by' => $businesslocation->user_id,
-                'status' => 0,
-                'clear' => 'no',
-    
-            ];
-            Notification::create($notifications);
+         
             return response()->json(['message' => 'Service Area updated successfully', 'servicelocation' => $businesslocation], 200);
             
         }else{
            
         $servicelocation = BusinessProfile::create($data);
-        $notifications = [
-            'title' => 'Created Service Area',
-            'message' => 'Service Area created successfully',
-            'created_by' => $request->user_id,
-            'status' => 0,
-            'clear' => 'no',
-
-        ];
-        Notification::create($notifications);
+        
         return response()->json(['message' => 'Service Area created successfully', 'servicelocation' => $servicelocation], 200);
         }
 
@@ -1099,15 +884,7 @@ class ServiceProviderController extends Controller
         if ($setting) {
             $setting->update(['publish'=>1]);
         
-            $notifications = [
-                'title' => 'Setting Publish',
-                'message' => 'Setting Publish successfully',
-                'created_by' => $payment->id,
-                'status' => 0,
-                'clear' => 'no',
-    
-            ];
-            Notification::create($notifications);
+           
             return response()->json(['message' => 'Setting Publish successfully', 'setting' => $setting], 200);
         } else {
             return response()->json(['message' => 'No Setting found'], 200);
