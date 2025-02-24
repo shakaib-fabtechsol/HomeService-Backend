@@ -37,6 +37,10 @@ return new class extends Migration
             $table->text('conversation_text_number')->nullable();
             $table->text('conversation_email')->nullable();
             $table->text('conversation_address')->nullable();
+            $table->string('call')->nullable();
+            $table->string('text')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
             $table->string('service_location_type')->nullable();
             $table->text('business_location')->nullable();
             $table->text('service_location')->nullable();
