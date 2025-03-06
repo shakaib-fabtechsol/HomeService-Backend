@@ -127,6 +127,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('NotificationSetting', 'NotificationSetting')->name('NotificationSetting');
             Route::post('banProvider', 'banProvider')->name('banProvider');
             
+            
         });
     });
 
