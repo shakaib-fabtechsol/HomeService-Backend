@@ -122,7 +122,6 @@ class SuperAdminController extends Controller
         $user->update(['status' => 1]);
         return response()->json(['message' => 'User banned successfully', 'user' => $user], 200);
     }
-    
 
     public function DeleteSalesReps($id)
     {
