@@ -125,7 +125,6 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('UpdatePersonal', 'UpdatePersonal')->name('UpdatePersonal');
             Route::post('Security', 'Security')->name('Security');
             Route::post('NotificationSetting', 'NotificationSetting')->name('NotificationSetting');
-            Route::post('banProvider', 'banProvider')->name('banProvider');
             
             
         });
