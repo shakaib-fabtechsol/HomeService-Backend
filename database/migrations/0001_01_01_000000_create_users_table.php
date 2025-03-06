@@ -37,6 +37,7 @@ return new class extends Migration
             $table->integer('customer_notification')->nullable();
             $table->integer('sales_notification')->nullable();
             $table->integer('message_notification')->nullable();
+            $table->integer('status')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
